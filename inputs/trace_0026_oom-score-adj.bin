@@ -1,0 +1,16 @@
+PING
+select 9
+config set oom-score-adj-values 10 20 30
+config set oom-score-adj yes
+config set oom-score-adj-values 15 20 30
+replicaof localhost 1
+replicaof no one
+set key-a value-a
+config set rdb-key-save-delay 1000000
+bgsave
+config set oom-score-adj no
+config set oom-score-adj-values -1000 -1000 -1000
+config set oom-score-adj yes
+config get oom-score-adj
+config set oom-score-adj-values 0 100 100
+config set oom-score-adj yes

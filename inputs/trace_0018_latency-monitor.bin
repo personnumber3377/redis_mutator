@@ -1,0 +1,65 @@
+PING
+select 9
+config set latency-monitor-threshold 200
+latency reset
+config resetstat
+latency histogram
+config resetstat
+set a b
+set c d
+latency histogram
+config resetstat
+client id
+client list
+latency histogram client
+latency histogram client|id
+config resetstat
+set a b
+set c d
+get a
+hset f k v
+hgetall f
+latency histogram set hset
+latency histogram hgetall get zadd
+config resetstat
+set a b
+get a
+latency histogram set get
+config resetstat
+latency histogram blabla
+latency histogram blabla blabla2 set get
+set a b
+get a
+latency histogram blabla blabla2 set get
+latency histogram blabla blabla2 set get
+latency histogram blabla set get
+config get latency-monitor-threshold
+config set latency-monitor-threshold 200
+latency reset
+debug sleep 0.3
+debug sleep 0.4
+debug sleep 0.5
+config set latency-monitor-threshold 0
+latency history command
+latency history command
+latency latest
+latency graph command
+config set latency-monitor-threshold 200
+config set latency-monitor-threshold 20
+flushdb
+eval 
+            local i = 0
+            while (i < tonumber(ARGV[1]... 1 mybigkey 1000000
+pexpire mybigkey 50
+dbsize
+dbsize
+dbsize
+latency latest
+latency graph expire-cycle
+config set latency-monitor-threshold 200
+latency history blabla
+latency reset blabla
+latency doctor
+latency reset
+latency latest
+LATENCY help xxx

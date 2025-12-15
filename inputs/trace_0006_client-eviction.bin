@@ -1,0 +1,312 @@
+PING
+select 9
+config set maxmemory-clients 3000000
+flushdb
+select 9
+client setname tst_V0oV
+client list
+mset k v k2 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv...
+get k
+client list
+flushdb
+select 9
+client setname tst_MtFu
+client list
+client list
+config set maxmemory 6291456
+config set maxmemory-clients 7%
+flushdb
+select 9
+client setname tst_TSPj
+client list
+client list
+client list
+select 9
+client setname tst_N2Xo
+client list
+client list
+config set maxmemory 0
+config set maxmemory-clients 3000000
+flushdb
+select 9
+client setname tst_kZpV
+client list
+multi
+set k vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv...
+set k vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv...
+exec
+multi
+set k vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv...
+set k vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv...
+set k vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv...
+client list
+flushdb
+select 9
+config set maxmemory-clients 200000
+watch 0
+watch 1
+watch 2
+watch 3
+watch 4
+watch 5
+watch 2448
+config set maxmemory-clients 3000000
+flushdb
+config set maxmemory-clients 200000
+select 9
+psubscribe 0
+psubscribe 1
+psubscribe 2
+psubscribe 3
+psubscribe 4
+psubscribe 5
+psubscribe 4095
+psubscribe 4096
+select 9
+subscribe 0
+subscribe 1
+subscribe 2
+subscribe 3
+subscribe 4
+subscribe 5
+subscribe 4095
+subscribe 4096
+select 9
+ssubscribe 0
+ssubscribe 1
+ssubscribe 2
+ssubscribe 3
+ssubscribe 4
+ssubscribe 5
+ssubscribe 4095
+ssubscribe 4096
+config set maxmemory-clients 3000000
+flushdb
+select 9
+select 9
+client setname redirected_client
+client id
+SUBSCRIBE __redis__:invalidate
+client tracking on redirect 16 bcast
+script load redis.call('incr', 'kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk...
+debug pause-cron 1
+client list
+evalsha 247acd3e61e36e830bc7febfa03e0c278c76ca4c 0
+client list
+evalsha 247acd3e61e36e830bc7febfa03e0c278c76ca4c 0
+client list
+evalsha 247acd3e61e36e830bc7febfa03e0c278c76ca4c 0
+client list
+evalsha 247acd3e61e36e830bc7febfa03e0c278c76ca4c 0
+client list
+debug pause-cron 0
+flushdb
+select 9
+config set maxmemory-clients 200000
+client tracking on prefix a000000000 prefix b000000000 prefix c000000000 bcast
+client tracking on prefix a000000001 prefix b000000001 prefix c000000001 bcast
+client tracking on prefix a000000002 prefix b000000002 prefix c000000002 bcast
+client tracking on prefix a000000003 prefix b000000003 prefix c000000003 bcast
+client tracking on prefix a000000004 prefix b000000004 prefix c000000004 bcast
+client tracking on prefix a000000005 prefix b000000005 prefix c000000005 bcast
+config set maxmemory-clients 3000000
+flushdb
+setrange k 200000 v
+select 9
+client setname test_client
+get k
+client list
+client list
+get k
+client list
+get k
+client list
+get k
+client list
+get k
+client list
+client list
+client list
+client list
+client list
+client list
+get k
+get k
+get k
+get k
+get k
+get k
+get k
+client list
+client list
+flushdb
+client setname control
+client no-evict on
+select 9
+client setname tst_yWpJ
+client list
+client no-evict on
+client list
+client list
+flushdb
+client setname control
+client no-evict on
+select 9
+client setname tst_IMxb
+client list
+client no-evict off
+client list
+PING
+select 9
+info
+config set maxmemory-clients 10485760
+config set client-output-buffer-limit normal 3145728 0 0
+flushdb
+setrange k 4194304 v
+select 9
+client setname qbuf-client
+select 9
+client setname obuf-client1
+select 9
+client setname obuf-client2
+client list
+get k
+get k
+ping
+info commandstats
+client list
+client list
+config get io-threads
+client list
+PING
+select 9
+config set maxmemory-clients 4194304
+select 9
+client setname client0
+client list
+select 9
+client setname client1
+client list
+client list
+client list
+client list
+client list
+client list
+select 9
+client setname client4
+client list
+select 9
+client setname client9
+client list
+client list
+config set maxmemory-clients 2097152
+client list
+PING
+select 9
+debug replybuffer resizing 0
+config set maxmemory-clients 0
+client setname control
+client no-evict on
+select 9
+client setname client0
+client list
+client list
+select 9
+client setname client1
+client list
+client list
+client list
+client list
+config set maxmemory-clients 6678554
+client list
+config get io-threads
+client list
+debug replybuffer resizing 1
+PING
+select 9
+client setname control
+client no-evict on
+config set maxmemory-clients 0
+debug replybuffer resizing 0
+select 9
+client setname client-0
+select 9
+client setname client-0
+select 9
+client setname client-0
+client list
+select 9
+client setname client-1
+select 9
+client setname client-1
+select 9
+client setname client-1
+client list
+client list
+client list
+config set maxmemory-clients 4567042
+client list
+client list
+config set maxmemory-clients 582658
+client list
+debug replybuffer resizing 1
+PING
+select 9
+flushall
+client no-evict on
+config set maxmemory-clients 0
+setrange k 1048576 v
+select 9
+client setname test_client
+client no-evict on
+config set maxmemory-clients 1
+get k
+client list
+get k
+client list
+get k
+client list
+client list
+client list
+get k
+get k
+get k
+client list
+get k
+client list
+get k
+client list
+get k
+client list
+get k
+client list
+client no-evict off
+client list
+flushall
+client no-evict on
+config set maxmemory-clients 0
+setrange k 1048576 v
+select 9
+client setname test_client
+get k
+client list
+get k
+client list
+get k
+client list
+client list
+client list
+get k
+get k
+get k
+client list
+get k
+client list
+get k
+client list
+get k
+client list
+get k
+client list
+config set maxmemory-clients 1
+client list

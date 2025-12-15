@@ -1,0 +1,486 @@
+PING
+select 9
+PING
+select 9
+slaveof 127.0.0.1 21611
+PING
+info
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 48738a8a813bcf7bed218da7117fb12da9471580 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21612
+PSYNC ? -1
+REPLCONF ACK 0
+info
+wait 2 9223372036854775808
+wait 2 9223372036854775807
+wait 2 -1
+set foo 0
+SELECT 9
+set foo 0
+incr foo
+incr foo
+incr foo
+incr foo
+incr foo
+incr foo
+wait 1 5000
+REPLCONF GETACK *
+REPLCONF ACK 121
+get foo
+incr foo
+incr foo
+wait 2 1000
+REPLCONF GETACK *
+REPLCONF ACK 181
+REPLCONF ACK 218
+set foo 0
+incr foo
+incr foo
+incr foo
+wait 1 1000
+set foo 0
+incr foo
+incr foo
+incr foo
+REPLCONF GETACK *
+wait 1 1000
+REPLCONF ACK 316
+REPLCONF GETACK *
+REPLCONF ACK 353
+multi
+incr foo
+client pause 10000 write
+exec
+wait 1 1000
+client unpause
+incr foo
+REPLCONF GETACK *
+REPLCONF ACK 413
+wait 1 1000
+select 9
+select 9
+incr foo
+incr foo
+wait 1 0
+wait 1 0
+info
+incr foo
+incr foo
+REPLCONF GETACK *
+REPLCONF GETACK *
+REPLCONF ACK 496
+REPLCONF ACK 533
+ping
+ping
+PING
+select 9
+config set appendfsync no
+incr foo
+waitaof 1 0 50
+config set appendfsync everysec
+incr foo
+waitaof 1 0 0
+config set appendfsync no
+select 9
+incr foo
+waitaof 1 0 0
+info
+config set appendonly no
+incr foo
+waitaof 1 0 0
+config set appendonly yes
+config set appendfsync no
+select 9
+client id
+incr foo
+waitaof 1 0 0
+info
+client unblock 7 timeout
+incr foo
+waitaof 1 0 0
+info
+client unblock 7 error
+config set appendfsync everysec
+config set appendonly no
+set x y
+config set rdb-key-save-delay 100000000
+bgsave
+info
+config set appendonly yes
+info
+set x y
+config set rdb-key-save-delay 0
+waitaof 1 0 10000
+info
+info
+config set appendonly yes
+info
+PING
+select 9
+config set appendfsync always
+config set appendfsync no
+select 9
+incr foo
+waitaof 0 1 0
+info
+replicaof 127.0.0.1 21613
+PING
+info
+REPLCONF listening-port 21614
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 381f71cd3a4747f47cc69a112c5884aa46c73ff7 3
+info
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 8 listening-port 21614
+PSYNC ? -1
+REPLCONF ACK 13
+info
+info
+incr foo
+SELECT 9
+incr foo
+waitaof 0 1 50
+REPLCONF GETACK *
+REPLCONF ACK 59 FACK 13
+config set appendfsync everysec
+config set appendfsync everysec
+info
+incr foo
+incr foo
+waitaof 0 1 0
+REPLCONF GETACK *
+REPLCONF ACK 119 FACK 13
+REPLCONF ACK 156 FACK 13
+REPLCONF ACK 156 FACK 156
+config set appendfsync everysec
+bgrewriteaof
+info
+info
+info
+incr foo
+incr foo
+waitaof 0 1 0
+REPLCONF GETACK *
+REPLCONF ACK 179 FACK 156
+REPLCONF ACK 216 FACK 156
+REPLCONF ACK 216 FACK 216
+config set appendfsync everysec
+config set rdb-key-save-delay 1000000
+bgrewriteaof
+incr foo
+incr foo
+waitaof 0 1 0
+REPLCONF GETACK *
+REPLCONF ACK 239 FACK 216
+REPLCONF ACK 276 FACK 216
+REPLCONF ACK 276 FACK 276
+config set rdb-key-save-delay 0
+info
+info
+info
+config set appendfsync everysec
+bgrewriteaof
+incr foo
+incr foo
+info
+info
+info
+config set appendfsync always
+waitaof 0 1 0
+REPLCONF GETACK *
+REPLCONF ACK 299 FACK 299
+config set appendfsync always
+incr foo
+incr foo
+waitaof 0 1 0
+REPLCONF GETACK *
+REPLCONF ACK 359 FACK 359
+config set appendfsync everysec
+incr foo
+waitaof 0 1 50
+incr foo
+REPLCONF GETACK *
+REPLCONF ACK 419 FACK 396
+waitaof 0 1 0
+REPLCONF GETACK *
+REPLCONF ACK 456 FACK 396
+REPLCONF ACK 493 FACK 396
+REPLCONF ACK 493 FACK 493
+select 9
+select 9
+incr foo
+incr foo
+waitaof 0 1 0
+waitaof 0 1 0
+info
+incr foo
+incr foo
+REPLCONF GETACK *
+REPLCONF GETACK *
+REPLCONF ACK 539 FACK 493
+REPLCONF ACK 576 FACK 493
+REPLCONF ACK 613 FACK 613
+ping
+ping
+replicaof no one
+incr foo
+waitaof 1 0 0
+config set repl-backlog-ttl 1
+incr foo
+waitaof 1 0 0
+select 9
+incr foo
+waitaof 0 1 0
+info
+replicaof 127.0.0.1 21613
+PING
+REPLCONF listening-port 21614
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 672115313fbb03c52caee26622a82370481ad1dd 697
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 13 listening-port 21614
+PSYNC ? -1
+REPLCONF ACK 616
+REPLCONF ACK 616 FACK 616
+config set appendonly no
+incr foo
+SELECT 9
+incr foo
+waitaof 0 1 0
+REPLCONF GETACK *
+REPLCONF ACK 662 FACK 616
+REPLCONF ACK 699 FACK 699
+config set appendonly yes
+info
+info
+info
+config set appendonly no
+incr foo
+incr foo
+waitaof 1 0 0
+config set appendonly yes
+info
+info
+info
+incr foo
+incr foo
+waitaof 1 1 0
+REPLCONF GETACK *
+REPLCONF ACK 745 FACK 722
+REPLCONF ACK 782 FACK 722
+REPLCONF ACK 782 FACK 782
+config set repl-ping-replica-period 1
+incr foo
+incr foo
+REPLCONF ACK 805 FACK 805
+get foo
+waitaof 1 1 0
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 1
+select 9
+ping
+REPLCONF ACK 819 FACK 819
+ping
+waitaof 1 1 0
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 1
+REPLCONF ACK 833 FACK 833
+ping
+waitaof 1 1 0
+config set repl-ping-replica-period 10
+PING
+select 9
+PING
+select 9
+replicaof 127.0.0.1 21615
+PING
+info
+REPLCONF listening-port 21616
+PSYNC c326ccf183225b321c99f39dc5c164092fce685a 1
+config set appendfsync no
+config set appendfsync no
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21616
+config set appendfsync no
+PSYNC ? -1
+config set appendfsync no
+REPLCONF ACK 0
+REPLCONF ACK 847 FACK 847
+REPLCONF ACK 0 FACK 0
+REPLCONF ACK 847 FACK 847
+REPLCONF ACK 0 FACK 0
+config set appendfsync always
+config set appendfsync always
+select 9
+select 9
+set boo 11
+set boo 22
+set boo 11
+SELECT 9
+set boo 22
+waitaof 1 1 0
+waitaof 1 1 0
+REPLCONF GETACK *
+info
+REPLCONF GETACK *
+REPLCONF ACK 877 FACK 847
+REPLCONF ACK 53 FACK 0
+info
+replicaof 127.0.0.1 21613
+PING
+replicaof 127.0.0.1 21615
+REPLCONF listening-port 21616
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 2abf58c1f35eac1a1c92d4b48a615b3f147f9fce 915
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 18 listening-port 21616
+PSYNC ? -1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 9 listening-port 21614
+PSYNC ? -1
+REPLCONF ACK 90 FACK 90
+REPLCONF ACK 914 FACK 914
+get boo
+get boo
+PING
+select 9
+PING
+select 9
+replicaof 127.0.0.1 21617
+PING
+info
+REPLCONF listening-port 21618
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+info
+PSYNC c810e5a5bbba8772c0e0b0052d5e55bf61b480f3 1
+config set appendfsync everysec
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21618
+config set appendfsync everysec
+PSYNC ? -1
+config set appendfsync everysec
+config set appendfsync everysec
+REPLCONF ACK 0
+REPLCONF ACK 0 FACK 0
+select 9
+select 9
+set boo 11
+set boo 22
+SELECT 9
+waitaof 1 1 0
+replicaof 127.0.0.1 21613
+PING
+replicaof 127.0.0.1 21617
+REPLCONF listening-port 21618
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PING
+REPLCONF listening-port 21614
+PSYNC 9063f64a0b251ad5ceb408d347c7a4161c2ff975 54
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC d158ffe295b78cb210df1f5e39dc2547cf4e17c7 91
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 21 listening-port 21618
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 9 listening-port 21614
+PSYNC ? -1
+PSYNC ? -1
+REPLCONF ACK 90
+REPLCONF ACK 1004
+REPLCONF ACK 90 FACK 90
+REPLCONF ACK 1004 FACK 1004
+get boo
+get boo
+PING
+select 9
+PING
+select 9
+replicaof 127.0.0.1 21619
+PING
+info
+REPLCONF listening-port 21620
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 76d7d6812b7ed62ca642918b8d209db260af1cbd 1
+info
+config set appendfsync always
+PSYNC ? -1
+config set appendfsync always
+config set appendfsync always
+select 9
+select 9
+set boo 11
+set boo 22
+waitaof 1 1 0
+waitaof 1 1 0
+SELECT 9
+set boo 22
+REPLCONF ACK 0
+REPLCONF GETACK *
+replicaof 127.0.0.1 21613
+PING
+replicaof 127.0.0.1 21619
+PING
+REPLCONF listening-port 21620
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 9 listening-port 21614
+PSYNC ? -1
+PSYNC ? -1
+REPLCONF ACK 1094
+REPLCONF ACK 90
+REPLCONF ACK 90 FACK 90
+REPLCONF ACK 1094 FACK 1094
+get boo
+get boo
+PING
+select 9
+PING
+select 9
+PING
+select 9
+replicaof 127.0.0.1 21623
+PING
+replicaof 127.0.0.1 21623
+REPLCONF listening-port 21622
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+info
+PING
+REPLCONF listening-port 21621
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 295f8f67a24305d27a21c4a77fa08b8f82f4e482 1
+PSYNC a5fcfc4f2dff7ab488e59c7631cbf9934af11b1b 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21622
+PSYNC ? -1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 7 listening-port 21621
+PSYNC ? -1
+REPLCONF ACK 0
+REPLCONF ACK 0
+info
+info
+select 9
+select 9
+config set appendonly yes
+config set appendonly yes
+config set appendonly yes
+config set appendfsync always
+config set appendfsync no
+config set appendfsync no
+info
+info
+info
+info
+incr foo
+SELECT 9
+incr foo
+waitaof 0 1 0
+incr foo
+REPLCONF ACK 46 FACK 0
+wait 2 0
+info
+REPLCONF GETACK *
+REPLCONF ACK 106 FACK 0
+SELECT 9
+incr foo
+REPLCONF GETACK *
+incr foo
+REPLCONF GETACK *
+REPLCONF ACK 46 FACK 0
+REPLCONF ACK 106 FACK 0
+config set appendfsync always
+incr foo
+incr *2
+REPLCONF ACK 166 FACK 0
+REPLCONF ACK 166 FACK 166
+ping
+ping

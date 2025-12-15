@@ -1,0 +1,93 @@
+PING
+select 9
+del bits
+bitfield bits set i8 0 -100
+bitfield bits set i8 0 101
+bitfield bits get i8 0
+del bits
+bitfield bits set u8 0 255
+bitfield bits set u8 0 100
+bitfield bits get u8 0
+del bits
+bitfield bits set i8 0 255 set i8 0 100 get i8 0
+del bits
+bitfield bits set u8 0 255 incrby u8 0 100 get u8 0
+del bits
+bitfield bits
+del bits
+bitfield bits set u8 #0 65
+bitfield bits set u8 #1 66
+bitfield bits set u8 #2 67
+get bits
+del bits
+bitfield bits set u8 #0 10
+bitfield bits incrby u8 #0 100
+bitfield bits incrby u8 #0 100
+del bits
+bitfield bits set u8 #0 10
+bitfield bits incrby u8 #0 100 incrby u8 #0 100
+del bits
+bitfield bits set u8 #0 100
+bitfield bits overflow wrap incrby u8 #0 257
+bitfield bits get u8 #0
+bitfield bits overflow wrap incrby u8 #0 255
+bitfield bits get u8 #0
+del bits
+bitfield bits set u8 #0 100
+bitfield bits overflow sat incrby u8 #0 257
+bitfield bits get u8 #0
+bitfield bits overflow sat incrby i8 #0 -255
+bitfield bits get i8 #0
+del bits
+bitfield bits overflow fail set u51 0 1502855643704749
+bitfield bits overflow fail incrby u51 0 2308093451986534
+del bits
+bitfield bits overflow wrap set i39 0 378446428592
+bitfield bits overflow wrap incrby i39 0 -125641334587
+bitfield bits get i39 0
+del bits
+bitfield bits overflow wrap set i62 0 2287046912688944128
+bitfield bits overflow wrap incrby i62 0 4606183989224990720
+bitfield bits get i62 0
+del bits
+bitfield bits overflow wrap set i7 0 -119
+bitfield bits overflow wrap incrby i7 0 89
+bitfield bits get i7 0
+set bits 1
+bitfield bits get u1 0
+del mystring
+BITFIELD mystring SET i8 0 10 SET i8 64 10 INCRBY i8 10 99900
+del mystring
+BITFIELD mystring SET i8 0 10 SET i8 64 10 INCRBY i8 10 99900
+del mystring
+BITFIELD mystring SET i8 0 10 SET i8 64 10 INCRBY i8 10 99900
+del mystring
+BITFIELD mystring SET i8 0 10 SET i8 64 10 INCRBY i8 10 99900
+del mystring
+bitfield_ro bits
+bitfield_ro bits set u8 0 100 get u8 0
+PING
+select 9
+PING
+select 9
+slaveof 127.0.0.1 21112
+PING
+$8
+
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 435cd638e43a92ed7fa34f589a4c0e9d554d6317 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21113
+PSYNC ? -1
+REPLCONF ACK 0
+info
+del bits
+bitfield bits set u8 0 255
+SELECT 9
+bitfield bits set u8 0 255
+bitfield bits set u8 0 100
+bitfield bits set u8 0 100
+info
+info
+bitfield_ro bits get u8 0
+bitfield_ro bits
+bitfield_ro bits set u8 0 100 get u8 0

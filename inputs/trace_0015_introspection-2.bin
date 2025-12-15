@@ -1,0 +1,79 @@
+PING
+select 9
+time
+set foo bar
+ttl foo
+type foo
+exists foo
+object idletime foo
+set foo bar
+touch foo
+object idletime foo
+set foo bar
+client no-touch on
+debug object foo
+get foo
+debug object foo
+client no-touch off
+get foo
+debug object foo
+set foo bar
+client no-touch on
+debug object foo
+touch foo
+debug object foo
+set foo bar
+client no-touch on
+debug object foo
+eval return redis.call('touch', 'foo') 0
+debug object foo
+flushdb
+set key1{t} 1
+set key2{t} 2
+touch key0{t} key1{t} key2{t} key3{t}
+config resetstat
+GEOADD foo 0 0 bar
+info commandstats
+info commandstats
+config resetstat
+set foo 1
+GEOADD foo 0 0 bar
+info commandstats
+info commandstats
+config resetstat
+SET foo bar
+EXPIRE foo 0
+info commandstats
+info commandstats
+config resetstat
+LPUSH list foo
+BRPOP list 0
+info commandstats
+info commandstats
+config resetstat
+MULTI
+set foo{t} bar
+GEOADD foo2{t} 0 0 bar
+EXPIRE foo2{t} 0
+EXEC
+info commandstats
+info commandstats
+info commandstats
+info commandstats
+info commandstats
+config resetstat
+set mykey myval
+eval 
+            redis.call('set', KEYS[1], 0)
+            redis.cal... 1 mykey
+info commandstats
+info commandstats
+info commandstats
+info commandstats
+command count
+command getkeys get key
+command getkeysandflags set k1 v1
+command getkeysandflags mset k1 v1 k2 v2
+command getkeysandflags LMOVE k1 k2 left right
+command getkeysandflags sort k1 store k2
+command info GEORADIUS

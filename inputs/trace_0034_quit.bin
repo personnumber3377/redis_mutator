@@ -1,0 +1,12 @@
+PING
+select 9
+select 9
+quit
+select 9
+quit
+select 9
+get foo
+select 9
+quit
+select 9
+get foo

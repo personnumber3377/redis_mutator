@@ -1,0 +1,267 @@
+PING
+select 9
+ping
+ping redis
+ping hello redis
+client list
+config get io-threads
+client id
+client list id 5
+client info
+config get io-threads
+client info
+client info
+del mylist
+select 9
+client id
+client list
+blpop mylist 0
+info
+client list
+lpush mylist a
+client list
+client info
+eval redis.call('ping') 0
+client info
+client kill
+client kill id 10 wrong_arg
+client kill id str
+client kill id -1
+client kill id 0
+select 9
+debug sleep 2
+select 9
+acl setuser dummy on nopass +ping
+auth dummy 
+auth dummy 
+client kill user dummy maxage 1
+ping
+select 9
+select 9
+info
+client kill skipme yes
+info
+select 9
+select 9
+info
+client kill skipme no
+ping
+client caching
+client caching maybe
+client no-evict wrongInput
+client reply wrongInput
+client tracking wrongInput
+client tracking on wrongInput
+client pause -1
+flushall
+set k v
+config set rdb-key-save-delay 10000000
+bgsave
+info
+client kill skipme no
+ping
+info
+config set rdb-key-save-delay 0
+flushall
+info
+info
+info
+info
+info
+info
+select 9
+client reply off
+ping pong
+ping pong2
+client reply on
+ping pong3
+select 9
+client reply skip
+ping pong
+ping pong2
+select 9
+client reply skip
+client reply on
+ping
+select 9
+monitor
+set foo bar
+get foo
+select 9
+monitor
+eval redis.call('set',KEYS[1],ARGV[1]) 1 foo bar
+function load replace #!lua name=test
+            redis.register_function('test', func...
+select 9
+monitor
+fcall test 0
+select 9
+monitor
+migrate 127.0.0.1 22111 key 9 5000
+migrate 127.0.0.1 22111 key 9 5000 AUTH user
+migrate 127.0.0.1 22111 key 9 5000 AUTH2 user password
+auth not-real
+auth not-real not-a-password
+hello 3 AUTH not-real not-a-password
+hello 2 AUTH not-real not-a-password
+select 9
+monitor
+multi
+set foo bar
+exec
+multi
+syntax error
+exec
+select 9
+select 9
+select 9
+del mylist
+monitor
+blpop mylist 0
+info
+lpush mylist 1
+info
+lpush mylist 2
+client getname
+client setname testName
+client getName
+client list
+client setname foo bar
+client setname myname
+select 9
+client setname foobar
+client list
+client list
+CLIENT SETINFO lib-name redis.py
+CLIENT SETINFO lib-ver 1.2.3
+client info
+CLIENT SETINFO badger hamster
+client info
+reset
+client info
+CLIENT SETINFO lib-name 
+client info
+PING
+select 9
+config get save
+PING
+select 9
+config get save
+config get *
+config set tls-client-key-file-pass 
+config set loglevel verbose
+config set cluster-slot-migration-handoff-max-lag-bytes 1048576
+config set aof-use-rdb-preamble yes
+config set replica-read-only yes
+config get *
+config get *
+debug config-rewrite-force-all
+select 9
+ping
+config get tls-client-key-file-pass
+config get loglevel
+config get cluster-slot-migration-handoff-max-lag-bytes
+config get aof-use-rdb-preamble
+config get replica-read-only
+config get maxmemory-eviction-tenacity
+select 9
+config get save
+config get shutdown-on-sigterm
+config get shutdown-on-sigint
+config set save 
+config set shutdown-on-sigterm default
+config rewrite
+select 9
+config get save
+config get shutdown-on-sigterm
+PING
+select 9
+config get save
+config set save 
+config rewrite
+select 9
+config get save
+config get maxmemory
+config get repl-backlog-size
+config get save
+config set maxmemory 10000001 repl-backlog-size 10000002 save 3000 5
+config get maxmemory
+config get port
+config get client-query-buffer-limit
+select 9
+ping
+config set maxmemory 10000001 maxmemory 10000002
+config set daemonize yes
+config get *
+config get key-load-delay
+config get maxmemory maxmemory* bind *of
+PING
+select 9
+config get maxmemory
+config get maxmemory-policy
+PING
+select 9
+config get loglevel
+config get maxmemory
+config get maxmemory-policy
+PING
+select 9
+config get proc-title-template
+config get loglevel
+PING
+select 9
+config get proc-title-template
+config get save
+config get loglevel
+PING
+select 9
+config get shutdown-on-sigint
+config get shutdown-on-sigterm
+PING
+select 9
+config set dir somedir
+DEBUG HELP
+PING
+select 9
+config set dbfilename somename
+DEBUG HELP
+config set dir somedir
+DEBUG HELP
+PING
+select 9
+debug populate 100000 key 1000
+select 9
+info
+config set loglevel debug
+config get loglevel
+config set dir asdf
+info
+PING
+select 9
+flushdb
+config rewrite
+select 9
+flushdb
+PING
+select 9
+config get hash-max-listpack-entries
+config get hash-max-ziplist-entries
+config set hash-max-listpack-entries 100
+config rewrite
+select 9
+config get hash-max-listpack-entries
+PING
+select 9
+config get hash-max-listpack-entries
+config get hash-max-ziplist-entries
+config set hash-max-listpack-entries 100
+config rewrite
+select 9
+config get hash-max-listpack-entries
+info threads
+info threads
+info threads
+info threads
+info threads
+info threads
+script debug no

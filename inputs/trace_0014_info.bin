@@ -1,0 +1,320 @@
+PING
+select 9
+PING
+select 9
+config resetstat
+CONFIG SET latency-tracking no
+set a b
+info latencystats
+CONFIG SET latency-tracking yes
+set a b
+info latencystats
+config resetstat
+info latencystats
+config resetstat
+info latencystats
+CONFIG SET latency-tracking yes
+SET a b
+GET a
+info latencystats
+info latencystats
+CONFIG SET latency-tracking-info-percentiles 0.0 50.0 100.0
+config get latency-tracking-info-percentiles
+info latencystats
+info latencystats
+config resetstat
+info latencystats
+config resetstat
+config get latency-tracking-info-percentiles
+CONFIG SET latency-tracking-info-percentiles 10.0 50.0 a
+info
+config get latency-tracking-info-percentiles
+CONFIG SET latency-tracking-info-percentiles 10.0 50.0 101.0
+info
+config resetstat
+CONFIG SET latency-tracking yes
+CONFIG SET latency-tracking-info-percentiles 50.0 99.0 99.9
+select 9
+del list1{t}
+blpop list1{t} 0
+info
+lpush list1{t} a
+blpop list1{t} 0
+info
+lpush list1{t} b
+info latencystats
+config resetstat
+CONFIG SET latency-tracking yes
+CONFIG SET latency-tracking-info-percentiles 50.0 99.0 99.9
+client id
+info latencystats
+info latencystats
+config resetstat
+CONFIG SET latency-tracking yes
+CONFIG SET latency-tracking-info-percentiles 50.0
+DEBUG sleep 0.05
+SET k v
+info latencystats
+info latencystats
+config resetstat
+info errorstats
+info
+auth k
+info errorstats
+info commandstats
+info
+config resetstat
+info errorstats
+config resetstat
+info errorstats
+info
+multi
+set a b
+auth a
+exec
+info errorstats
+info commandstats
+info commandstats
+info commandstats
+info
+exec
+info commandstats
+info errorstats
+info
+config resetstat
+info errorstats
+info
+eval redis.pcall('XGROUP', 'CREATECONSUMER', 's1', 'mygroup', 'consum... 0
+info errorstats
+info commandstats
+info commandstats
+eval a
+info commandstats
+info errorstats
+info
+config resetstat
+info
+info errorstats
+evalsha NotValidShaSUM 0
+info errorstats
+info commandstats
+info
+config resetstat
+info errorstats
+config resetstat
+info errorstats
+del mystream
+XADD mystream * f v
+XGROUP CREATECONSUMER mystream mygroup consumer
+info errorstats
+info commandstats
+config resetstat
+info errorstats
+config resetstat
+info
+info errorstats
+asdf
+info errorstats
+info
+config resetstat
+info errorstats
+config resetstat
+info
+info errorstats
+multi
+set
+exec
+info errorstats
+info errorstats
+info
+info commandstats
+info commandstats
+info commandstats
+info
+config resetstat
+info errorstats
+config resetstat
+info
+info errorstats
+set k
+info errorstats
+info commandstats
+set k1 v1
+set k2 v2
+info commandstats
+info
+config resetstat
+info
+info errorstats
+config set maxmemory 1
+set a b
+info errorstats
+info commandstats
+info
+config resetstat
+info errorstats
+config set maxmemory 0
+config resetstat
+info
+info errorstats
+ACL SETUSER alice on >p1pp0 ~cached:* +get +info +config
+auth alice p1pp0
+set a b
+info errorstats
+info commandstats
+info
+config resetstat
+info errorstats
+auth default 
+config resetstat
+select 9
+client id
+del list1{t}
+blpop list1{t} 0
+info
+client unblock 7 error
+info errorstats
+info commandstats
+info
+config resetstat
+eval return redis.error_reply(string.format('%s my error message', AR... 0 1
+eval return redis.error_reply(string.format('%s my error message', AR... 0 2
+eval return redis.error_reply(string.format('%s my error message', AR... 0 3
+eval return redis.error_reply(string.format('%s my error message', AR... 0 4
+eval return redis.error_reply(string.format('%s my error message', AR... 0 5
+eval return redis.error_reply(string.format('%s my error message', AR... 0 6
+eval return redis.error_reply(string.format('%s my error message', AR... 0 1099
+eval return redis.error_reply(string.format('%s my error message', AR... 0 1100
+info errorstats
+info
+info stats
+info stats
+config resetstat
+config get io-threads
+info
+info
+info
+info all
+info debug
+info debug
+config resetstat
+info stats
+config get client-query-buffer-limit
+config set client-query-buffer-limit 1048576
+info stats
+config set client-query-buffer-limit 1073741824
+config get client-output-buffer-limit
+config set client-output-buffer-limit normal 10 0 0
+set key aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...
+get key
+config set client-output-buffer-limit normal 0 0 0 slave 268435456 67108864 60 pubsub 33554432 8388608...
+info stats
+info clients
+select 9
+select 9
+ssubscribe chan1
+subscribe chan2
+info clients
+unsubscribe non-exist-chan
+info clients
+unsubscribe chan2
+info clients
+unsubscribe non-exist-chan
+info clients
+info clients
+select 9
+info
+info
+client info
+client info
+watch key
+info
+info
+client info
+client info
+watch key
+info
+info
+client info
+client info
+unwatch
+info
+info
+client info
+client info
+unwatch
+info
+info
+client info
+client info
+watch key
+info
+multi
+exec
+info
+watch key
+info
+multi
+discard
+info
+watch key
+info
+discard
+info
+unwatch
+info
+info
+PING
+select 9
+flushall
+set key:0 AAA
+set key:1 AAA
+set key:2 AAA
+set key:3 AAA
+set key:4 AAA
+set key:5 AAA
+set key:6 AAA
+memory stats
+info memory
+memory stats
+info
+multi
+set this_will_reach_max_load_factor 1
+set this_must_be_rehashed 1
+info memory
+memory stats
+exec
+flushall
+set large_str aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...
+info
+del large_str
+info
+set small_str aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...
+info
+PING
+cluster addslotsrange 0 16383
+cluster slots
+debug internal_secret
+CLUSTER MYID
+cluster slots
+debug internal_secret
+cluster info
+cluster info
+cluster info
+cluster info
+cluster info
+cluster info
+cluster info
+cluster info
+set k v
+memory stats
+set k v
+del k
+set k v
+del k
+set k v
+del k
+set k v
+del k
+set k v
+memory stats

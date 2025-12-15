@@ -1,0 +1,9 @@
+PING
+select 9
+info
+info all
+info default
+info everything
+info cpu
+info sentinel
+info cpu default

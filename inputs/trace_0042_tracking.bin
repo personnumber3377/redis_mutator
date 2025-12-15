@@ -1,0 +1,453 @@
+PING
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+select 9
+select 9
+CLIENT TRACKING on REDIRECT 6
+SET a{t} 1
+SET b{t} 1
+GET a{t}
+INCR b{t}
+INCR a{t}
+MGET a{t} b{t} c{t} d{t} e{t} f{t} g{t}
+CLIENT TRACKING off
+CLIENT TRACKING on BCAST REDIRECT 6
+MSET a{t} 1 b{t} 2 c{t} 3
+CLIENT TRACKING off
+CLIENT TRACKING on BCAST REDIRECT 6 PREFIX a: PREFIX b:
+MULTI
+INCR a:1{t}
+INCR a:2{t}
+INCR b:1{t}
+INCR b:2{t}
+INCR c:1{t}
+EXEC
+CLIENT TRACKING on BCAST REDIRECT 6 PREFIX c:
+INCR c:1234
+CLIENT TRACKING off
+CLIENT TRACKING on REDIRECT 6 NOLOOP
+MGET otherkey1{t} loopkey{t} otherkey2{t}
+SET otherkey1{t} 1
+SET loopkey{t} 1
+SET otherkey2{t} 1
+CLIENT TRACKING off
+CLIENT TRACKING on BCAST REDIRECT 6 NOLOOP
+SET otherkey1 1
+SET loopkey 1
+SET otherkey2 1
+CLIENT TRACKING off
+CLIENT TRACKING on BCAST REDIRECT 6 NOLOOP
+SET mykey myval px 1
+SET mykeyotherkey myval
+CLIENT TRACKING off
+CLIENT TRACKING on BCAST REDIRECT 6 NOLOOP
+MULTI
+SET mykey{t} myval px 1
+SET mykeyotherkey{t} myval
+DEBUG SLEEP 0.1
+GET mykey{t}
+EXEC
+HELLO 3
+HELLO 3
+HELLO
+HELLO 2
+HELLO
+HELLO 3
+CLIENT TRACKING off
+CLIENT TRACKING on
+SET key1 1
+GET key1
+SET key1 2
+CLIENT TRACKING off
+CLIENT TRACKING on REDIRECT 6
+SET key1 1
+GET key1
+SET key1 2
+HELLO 2
+SET key1 1
+GET key1
+HELLO 3
+SET key1 2
+HELLO 3
+SET key1 1
+GET key1
+SET key1 2
+CLIENT TRACKING off
+CLIENT TRACKING on NOLOOP
+HELLO 3
+SET key1 1
+GET key1
+eval return redis.call('set', 'key1', '2') 1 key1
+GET key1
+CLIENT TRACKING off
+CLIENT TRACKING off
+CLIENT TRACKING on
+MSET key2{t} 1 key2{t} 1
+EVAL redis.call('set', 'key3{t}', 'bar') 2 key1{t} key2{t}
+MSET key2{t} 2 key1{t} 2
+ping
+EVAL redis.call('get', 'key2{t}') 2 key1{t} key2{t}
+MSET key2{t} 2 key3{t} 2
+ping
+EVAL_RO redis.call('ping') 2 key1{t} key2{t}
+MSET key2{t} 2 key1{t} 2
+ping
+EVAL_RO redis.call('get', 'key2{t}') 2 key1{t} key2{t}
+MSET key2{t} 2 key3{t} 2
+ping
+CLIENT TRACKING on REDIRECT 6
+SET key1 1
+GET key1
+QUIT
+SET key1 2
+PING
+select 9
+CLIENT ID
+SUBSCRIBE __redis__:invalidate
+CLIENT TRACKING on REDIRECT 9
+CLIENT TRACKING on REDIRECT 9
+MSET key1{t} 1 key2{t} 1
+GET key1{t}
+GET key2{t}
+INCR key1{t}
+INCR key2{t}
+HELLO 3
+CLIENT TRACKING on
+set key1 1
+GET key1
+GET key1
+INCR key1
+PING
+CLIENT TRACKING on OPTIN REDIRECT 9
+SET key1 1
+GET key1
+SET key1 2
+CLIENT TRACKING off
+CLIENT TRACKING on REDIRECT 9
+SET key2 1
+GET key2
+SET key2 2
+CLIENT TRACKING on OPTIN REDIRECT 9
+SET key1 3
+CLIENT CACHING yes
+GET key1
+SET key1 4
+CLIENT TRACKING off
+CLIENT TRACKING on OPTOUT REDIRECT 9
+SET key1 1
+GET key1
+SET key1 2
+SET key1 1
+CLIENT CACHING no
+GET key1
+SET key1 2
+SET key2 1
+GET key2
+SET key2 2
+UNSUBSCRIBE __redis__:invalidate
+HELLO 3
+SUBSCRIBE __redis__:invalidate
+CLIENT TRACKING on REDIRECT 9
+SET key1 1
+GET key1
+INCR key1
+HELLO 2
+CLIENT TRACKING off
+HELLO 3
+CLIENT TRACKING on
+SET key1 1
+GET key1
+CLIENT TRACKING off
+CLIENT TRACKING on BCAST
+INCR key1
+PING
+select 9
+CLIENT TRACKING ON BCAST PREFIX FOOBAR PREFIX FOO
+CLIENT TRACKING ON BCAST PREFIX FOO PREFIX FOOBAR
+CLIENT TRACKING ON BCAST PREFIX FOO PREFIX BAR
+CLIENT TRACKING ON BCAST PREFIX FO
+CLIENT TRACKING ON BCAST PREFIX BARB
+CLIENT TRACKING OFF
+CLIENT TRACKING off
+HELLO 3
+CLIENT TRACKING on
+HSET myhash f 1
+HGET myhash f
+HDEL myhash f
+CLIENT TRACKING off
+HELLO 3
+CLIENT TRACKING on
+DEBUG SET-ACTIVE-EXPIRE 0
+MULTI
+MSET x{t} 1 y{t} 2
+PEXPIRE y{t} 100
+GET y{t}
+EXEC
+MGET x{t} y{t}
+DEBUG SET-ACTIVE-EXPIRE 1
+CLIENT TRACKING off
+HELLO 3
+CLIENT TRACKING on
+MSET a{t} 1 b{t} 2
+GET a{t}
+MULTI
+INCR a{t}
+GET b{t}
+EXEC
+CLIENT TRACKING off
+HELLO 3
+CLIENT TRACKING on
+info
+info
+info
+config get maxmemory-policy
+config set maxmemory 1442912
+config set maxmemory-policy volatile-random
+setex volatile-key 10000 x
+get volatile-key
+setbit big-key 1600000 0
+getbit big-key 0
+config set maxmemory-policy noeviction
+config set maxmemory 0
+RPUSH list2{t} a
+HELLO 3
+CLIENT TRACKING on
+LRANGE list2{t} 0 -1
+BLMOVE list1{t} list2{t} left left 0
+info
+rpush list1{t} foo
+CLIENT TRACKING off
+CLIENT TRACKING on REDIRECT 9 NOLOOP
+MSET key1{t} 1 key2{t} 2
+MGET key1{t} key2{t}
+config set tracking-table-max-keys 1
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+CLIENT TRACKING on REDIRECT 12
+SET key1 1
+GET key1
+FLUSHALL
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+CLIENT TRACKING on REDIRECT 14
+SET key1 1
+GET key1
+FLUSHDB
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+CLIENT TRACKING on REDIRECT 16
+GET key1
+GET key2
+info
+FLUSHALL ASYNC
+info
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+HELLO 3
+CLIENT TRACKING on
+SET a{t} 1
+GET a{t}
+MULTI
+FLUSHDB
+EXEC
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+CLIENT TRACKING on REDIRECT 20
+SET key0 0
+GET key0
+SET key1 1
+GET key1
+SET key2 2
+GET key2
+SET key3 3
+GET key3
+config set tracking-table-max-keys 1
+PING
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+CLIENT TRACKING on REDIRECT 22
+SET key1 1
+SET key2 2
+GET key1
+GET key2
+CLIENT TRACKING on BCAST PREFIX prefix:
+SET prefix:key1 1
+SET prefix:key2 2
+info
+CLIENT GETREDIR
+CLIENT TRACKING off
+CLIENT GETREDIR
+CLIENT TRACKING on
+CLIENT GETREDIR
+CLIENT TRACKING off
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+HELLO 3
+CLIENT TRACKING on REDIRECT 24
+SET key1 1
+GET key1
+QUIT
+SET key1 2
+client trackinginfo
+CLIENT TRACKING off
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+config set tracking-table-max-keys 2
+debug pause-cron 1
+HELLO 3
+CLIENT TRACKING on
+mget 1{tag} 2{tag}
+multi
+config set tracking-table-max-keys 1
+ping
+exec
+debug pause-cron 0
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+hello 3
+client tracking on
+set foo bar
+get foo
+client reply off
+set foo bar2
+client reply on
+ping
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+hello 2
+client tracking on
+set foo bar
+get foo
+client reply off
+set foo bar2
+client reply on
+ping
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+select 9
+hello 3
+client id
+client tracking on redirect 33
+set foo bar
+get foo
+client reply off
+set foo bar2
+client reply on
+ping
+CLIENT TRACKING off
+QUIT
+QUIT
+select 9
+select 9
+client id
+subscribe __redis__:invalidate
+FLUSHALL
+HELLO 2
+config set tracking-table-max-keys 1000000
+hello 3
+client tracking on redirect 35
+set foo bar
+get foo
+client reply off
+quit
+set foo bar2
+client reply on
+ping
+PING
+select 9
+select 9
+client id
+CLIENT TRACKING on OPTIN REDIRECT 6
+CLIENT CACHING yes
+CLIENT TRACKING off
+CLIENT REPLY on
+CLIENT TRACKINGINFO
+CLIENT GETREDIR

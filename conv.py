@@ -12,11 +12,37 @@ MAX_GEOADD_TRIPLES = 5    # lon lat member × N
 MAX_ARG_LEN = 64
 # --------------------------------------
 
+
+
+'''
+def parse_resp(data: bytes):
+    i = 0
+    n = len(data)
+    while i < n:
+        print("data[i-100:i+100]: "+str(data[i-100:i+100]))
+        assert data[i:i+1] == b'*'
+        i += 1
+        end = data.index(b'\r\n', i)
+        argc = int(data[i:end])
+        i = end + 2
+        argv = []
+        for _ in range(argc):
+            i += 1
+            end = data.index(b'\r\n', i)
+            ln = int(data[i:end])
+            i = end + 2
+            argv.append(data[i:i+ln])
+            i += ln + 2
+        yield argv
+'''
+
+'''
 def parse_resp(data: bytes):
     i = 0
     n = len(data)
 
     while i < n:
+        print("data[i-100:i+100]: "+str(data[i-100:i+100]))
         # Skip whitespace and newlines
         if data[i:i+1] in b"\r\n ":
             i += 1
@@ -53,6 +79,72 @@ def parse_resp(data: bytes):
 
         if argv:
             yield argv
+'''
+
+def parse_resp(data: bytes):
+    i = 0
+    n = len(data)
+
+    while i < n:
+        # Skip whitespace
+        if data[i:i+1] in b" \r\n":
+            i += 1
+            continue
+
+        # Skip inline commands (e.g. PING\r\n)
+        if data[i:i+1] not in (b'*',):
+            end = data.find(b'\r\n', i)
+            if end == -1:
+                return
+            i = end + 2
+            continue
+
+        # We saw '*', try to parse argc
+        star = i
+        i += 1
+        end = data.find(b'\r\n', i)
+        if end == -1:
+            return
+
+        try:
+            argc = int(data[i:end])
+        except ValueError:
+            # Not a valid array header → resync
+            i = star + 1
+            continue
+
+        i = end + 2
+        argv = []
+        ok = True
+
+        for _ in range(argc):
+            if i >= n or data[i:i+1] != b'$':
+                ok = False
+                break
+
+            i += 1
+            end = data.find(b'\r\n', i)
+            if end == -1:
+                return
+
+            try:
+                length = int(data[i:end])
+            except ValueError:
+                ok = False
+                break
+
+            i = end + 2
+            if i + length + 2 > n:
+                return
+
+            arg = data[i:i+length]
+            argv.append(arg)
+            i += length + 2  # data + CRLF
+
+        if ok and argv:
+            yield argv
+        # else: silently drop malformed command
+
 def opcode(argv):
     return argv[0].lower()
 

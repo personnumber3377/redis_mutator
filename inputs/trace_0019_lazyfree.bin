@@ -1,0 +1,105 @@
+PING
+select 9
+info
+sadd myset 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61
+scard myset
+info
+unlink myset
+info
+info
+info
+info
+info
+info
+sadd myset 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61
+scard myset
+info
+flushdb async
+info
+info
+info
+info
+config resetstat
+config set stream-node-max-entries 5
+xadd stream * foo 0
+xadd stream * bar 1
+xadd stream * foo 2
+xadd stream * foo 3
+xadd stream * foo 4
+xadd stream * foo 5
+xadd stream * foo 999
+xgroup create stream mygroup 0
+xreadgroup GROUP mygroup Alice COUNT 2 STREAMS stream >
+xdel stream 1765815805812-1
+xack stream mygroup 1765815805812-0
+unlink stream
+info
+info
+config resetstat
+xadd s * a b
+xgroup create s bla $
+xgroup destroy s bla
+unlink s
+info
+info
+config resetstat
+info
+set key:0 AAA
+set key:1 AAA
+set key:2 AAA
+set key:3 AAA
+set key:4 AAA
+set key:5 AAA
+set key:999 AAA
+flushall
+info
+config resetstat
+select 9
+set x 1
+set y 2
+FLUSHALL
+FLUSHALL
+FLUSHDB
+info
+config resetstat
+set x 11
+set y 22
+multi
+flushall
+exec
+info
+info
+config resetstat
+set key:0 AAA
+set key:1 AAA
+set key:2 AAA
+set key:3 AAA
+set key:4 AAA
+set key:5 AAA
+set key:99999 AAA
+select 9
+flushall
+info
+info
+config resetstat
+select 9
+set x 1
+set y 2
+FLUSHALL
+PING
+info
+config resetstat
+select 9
+set key:0 AAA
+set key:1 AAA
+set key:2 AAA
+set key:3 AAA
+set key:4 AAA
+set key:5 AAA
+set key:49998 AAA
+set key:49999 AAA
+flushdb
+info
+slaveof 127.0.0.1 0
+ping
+slaveof no one

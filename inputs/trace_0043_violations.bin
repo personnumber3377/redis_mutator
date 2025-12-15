@@ -1,0 +1,22 @@
+PING
+select 9
+set S1 asdf
+set S2 123
+object encoding S2
+sadd myset 1 2
+mset D1 1 D2 2
+sort myset by D* get S* store mylist
+llen mylist
+PING
+select 9
+PING
+select 9
+PING
+select 9
+PING
+select 9
+PING
+select 9
+config set hash-max-ziplist-value 1000000000
+PING
+select 9

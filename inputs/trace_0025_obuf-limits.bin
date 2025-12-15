@@ -1,0 +1,118 @@
+PING
+select 9
+config get client-output-buffer-limit
+config set client-output-buffer-limit wrong number
+config set client-output-buffer-limit invalid_class 10mb 10mb 60
+config set client-output-buffer-limit master 10mb 10mb 60
+config set client-output-buffer-limit normal 10mbs 10mb 60
+config set client-output-buffer-limit replica 10mb 10mbs 60
+config set client-output-buffer-limit normal 0 0 0 slave 268435456 67108864 60 pubsub 33554432 8388608...
+config set client-output-buffer-limit pubsub 100000 0 0
+select 9
+subscribe foo
+publish foo barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarb...
+client list
+publish foo barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarb...
+client list
+publish foo barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarb...
+client list
+publish foo barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarb...
+client list
+config set client-output-buffer-limit pubsub 0 100000 3
+select 9
+client setname test_client
+subscribe foo
+publish foo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client list
+publish foo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client list
+publish foo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client list
+publish foo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client list
+config set client-output-buffer-limit pubsub 0 100000 4
+select 9
+client setname test_client
+subscribe foo
+publish foo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client list
+publish foo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client list
+publish foo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client list
+publish foo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client list
+publish foo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client list
+client list
+client list
+client list
+client list
+client list
+client list
+client list
+config set latency-tracking no
+config set client-output-buffer-limit normal 100000 0 0
+lpush mylist xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+info
+select 9
+client setname mybiglist
+lrange mylist 0 -1
+client list
+info
+config set client-output-buffer-limit normal 100000 0 0
+set bigkey xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+select 9
+client setname multicommands
+info
+set 0 0
+get 0
+del 0
+get bigkey
+set 1 1
+get 1
+del 1
+get bigkey
+info commandstats
+ping
+client list
+config set client-output-buffer-limit normal 100000 0 0
+lpush mylist2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+lpush mylist2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+client setname transactionclient
+set k1 v1
+multi
+set k2 v2
+get k2
+lrange mylist2 0 -1
+set k3 v3
+del k1
+exec
+select 9
+client list
+get k1
+get k2
+get k3
+config set client-output-buffer-limit normal 1000000 0 0
+hset myhash a b
+hrandfield myhash -999999999
+select 9
+config set client-output-buffer-limit normal 100000 0 0
+set long-key-name-prefix-of-100-chars-------------------------------... AAA
+set long-key-name-prefix-of-100-chars-------------------------------... AAA
+set long-key-name-prefix-of-100-chars-------------------------------... AAA
+set long-key-name-prefix-of-100-chars-------------------------------... AAA
+set long-key-name-prefix-of-100-chars-------------------------------... AAA
+set long-key-name-prefix-of-100-chars-------------------------------... AAA
+set long-key-name-prefix-of-100-chars-------------------------------... AAA
+keys *
+select 9

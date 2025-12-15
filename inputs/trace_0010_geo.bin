@@ -1,0 +1,559 @@
+PING
+select 9
+set src{t} wrong_type
+georadius src{t} 1 1 1 km
+georadius src{t} 1 1 1 km store dest{t}
+geosearch src{t} fromlonlat 0 0 byradius 1 km
+geosearchstore dest{t} src{t} fromlonlat 0 0 byradius 1 km
+georadiusbymember src{t} member 1 km
+georadiusbymember src{t} member 1 km store dest{t}
+geosearch src{t} frommember member bybox 1 1 km
+geosearchstore dest{t} src{t} frommember member bybox 1 1 m
+geodist src{t} member 1 km
+geohash src{t} member
+geopos src{t} member
+del src{t}
+georadius src{t} 1 1 1 km
+georadius src{t} 1 1 1 km store dest{t}
+geosearch src{t} fromlonlat 0 0 byradius 1 km
+geosearchstore dest{t} src{t} fromlonlat 0 0 byradius 1 km
+georadiusbymember src{t} member 1 km
+georadiusbymember src{t} member 1 km store dest{t}
+geosearch src{t} frommember member bybox 1 1 km
+geosearchstore dest{t} src{t} frommember member bybox 1 1 m
+del src{t}
+geoadd src{t} 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+georadius src{t} 1 1 1 km
+georadius src{t} 1 1 1 km store dest{t}
+geosearch src{t} fromlonlat 0 0 byradius 1 km
+geosearchstore dest{t} src{t} fromlonlat 0 0 byradius 1 km
+del src{t}
+geoadd src{t} 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+georadiusbymember src{t} member 1 km
+georadiusbymember src{t} member 1 km store dest{t}
+geosearch src{t} frommember member bybox 1 1 km
+geosearchstore dest{t} src{t} frommember member bybox 1 1 m
+geoadd nyc -73.9454966 40.747533 lic market
+geoadd nyc -73.9454966 40.747533 lic market
+geoadd nyc CH 40.747533 -73.9454966 lic market
+geopos nyc lic market
+geoadd nyc NX -73.9454966 40.747533 lic market
+geopos nyc lic market
+geoadd nyc XX -83.9454966 40.747533 lic market
+geopos nyc lic market
+geoadd nyc CH NX -73.9454966 40.747533 lic market
+geoadd nyc CH XX -73.9454966 40.747533 lic market
+geoadd nyc xx nx -73.9454966 40.747533 lic market
+geoadd nyc ch xx foo -73.9454966 40.747533 lic market
+geoadd nyc -73.9454966 40.747533 lic market foo bar luck market
+geoadd nyc -73.9733487 40.7648057 central park n/q/r -73.9903085 40.7362513 union square -74.0131604 40.7126674 wtc one -73.7858139 40.6428986 jfk -73.9375699 40.7498929 q4
+zrange nyc 0 -1 withscores
+georadius nyc -73.9798091 40.7598464 3 km asc
+georadius_ro nyc -73.9798091 40.7598464 3 km asc
+geosearch nyc fromlonlat -73.9798091 40.7598464 bybox 6 6 km asc
+geosearch nyc fromlonlat -73.9798091 40.7598464 frommember xxx bybox 6 6 km asc
+geosearch nyc bybox 3 3 km asc desc withhash withdist withcoord
+geosearch nyc fromlonlat -73.9798091 40.7598464 byradius 3 km bybox 3 3 km asc
+geosearch nyc fromlonlat -73.9798091 40.7598464 asc desc withhash withdist withcoord
+geosearch nyc fromlonlat -73.9798091 40.7598464 bybox 6 6 km asc storedist
+georadius nyc -73.9798091 40.7598464 3 km withdist asc
+geosearch nyc fromlonlat -73.9798091 40.7598464 bybox 6 6 km withdist asc
+georadius nyc -73.9798091 40.7598464 10 km COUNT 3
+georadius nyc -73.9798091 40.7598464 10 km WITHCOORD WITHHASH COUNT 2
+georadius nyc -73.9798091 40.7598464 10 km WITHHASH WITHCOORD COUNT 2
+georadius nyc -73.9798091 40.7598464 10 km WITHDIST WITHHASH WITHCOORD COUNT 2
+georadius nyc -73.9798091 40.7598464 10 km COUNT 3 ANY
+georadius nyc -73.9798091 40.7598464 10 km COUNT 3 ANY ASC
+geoadd users -47.271613776683807 -54.534504198047678 user_000000
+GEORADIUS users 0 0 50000 km WITHCOORD
+georadiusbymember nyc wtc one 7 km
+georadiusbymember_ro nyc wtc one 7 km
+del k1
+geoadd k1 -0.15307903289794921875 85 n1 0.3515625 85.00019260486917005437 n2
+GEORADIUSBYMEMBER k1 n1 4891.94 m
+zrem k1 n1 n2
+geoadd k1 -4.95211958885192871094 85 n3 11.25 85.0511 n4
+GEORADIUSBYMEMBER k1 n3 156544 m
+zrem k1 n3 n4
+geoadd k1 -45 65.50900022111811438208 n5 90 85.0511 n6
+GEORADIUSBYMEMBER k1 n5 5009431 m
+del k1
+geoadd k1 45 65 n1 -135 85.05 n2
+GEORADIUSBYMEMBER k1 n1 5009431 m
+geosearch nyc frommember wtc one bybox 14 14 km
+del Sicily
+geoadd Sicily 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+geoadd Sicily 12.758489 38.788135 edge1 17.241510 38.788135 eage2
+georadius Sicily 15 37 200 km asc
+geosearch Sicily fromlonlat 15 37 bybox 400 400 km asc
+del Sicily
+geoadd Sicily 12.75 36.995 test1
+geoadd Sicily 12.75 36.50 test2
+geoadd Sicily 13.00 36.50 test3
+geosearch Sicily fromlonlat 15 37 bybox 400 2 km
+geoadd Sicily -1 37.00 test3
+geosearch Sicily fromlonlat 15 37 bybox 3000 2 km asc
+del Sicily
+geoadd Sicily 12.758489 38.788135 edge1 17.241510 38.788135 edge2 17.250000 35.202000 edge3 12.750000 35.202000 edge4 12.748489955781654 37 edge5
+geosearch Sicily fromlonlat 15 37 bybox 400 400 km asc
+georadiusbymember nyc wtc one 7 km withdist
+del points
+geoadd points -5.6 42.6 test
+geohash points test
+del points
+geoadd points 10 20 a 30 40 b
+geohash points
+del points
+geoadd points 10 20 a 30 40 b
+geopos points a b
+geopos points a b
+del points
+geoadd points 10 20 a 30 40 b
+geopos points a x b
+del points
+geoadd points 10 20 a 30 40 b
+geodist points Palermo Catania
+geodist points Palermo Catania km
+geodist points Palermo Palermo
+del points
+geoadd points 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+geodist points Palermo Agrigento
+geodist points Ragusa Agrigento
+geodist empty_key Palermo Catania
+del points{t}
+geoadd points{t} 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+georadius points{t} 13.361389 38.115556 50 km store
+geosearchstore abc{t} points{t} fromlonlat 13.361389 38.115556 byradius 50 km store abc{t}
+del points{t}
+geoadd points{t} 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+georadius points{t} 13.361389 38.115556 50 km store points2{t} withdist
+georadius points{t} 13.361389 38.115556 50 km store points2{t} withhash
+georadius points{t} 13.361389 38.115556 50 km store points2{t} withcoords
+del points{t}
+geoadd points{t} 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+georadius points{t} 13.361389 38.115556 500 km store points2{t}
+zrange points{t} 0 -1
+zrange points2{t} 0 -1
+del points{t}
+geoadd points{t} 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+georadiusbymember points{t} Palermo 500 km store points2{t}
+zrange points2{t} 0 -1
+georadiusbymember points{t} Catania 500 km storedist points2{t}
+zrange points2{t} 0 -1
+zrange points2{t} 0 -1 withscores
+geosearchstore points2{t} points{t} fromlonlat 13.361389 38.115556 byradius 500 km
+zrange points{t} 0 -1
+zrange points2{t} 0 -1
+del points{t}
+geoadd points{t} 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+georadius points{t} 13.361389 38.115556 500 km storedist points2{t}
+zrange points2{t} 0 -1 withscores
+geosearchstore points2{t} points{t} fromlonlat 13.361389 38.115556 byradius 500 km storedist
+zrange points2{t} 0 -1 withscores
+del points{t}
+geoadd points{t} 13.361389 38.115556 Palermo 15.087269 37.502669 Catania
+georadius points{t} 13.361389 38.115556 500 km storedist points2{t} asc count 1
+zcard points2{t}
+zrange points2{t} 0 -1 withscores
+georadius points{t} 13.361389 38.115556 500 km storedist points2{t} desc count 1
+zcard points2{t}
+zrange points2{t} 0 -1 withscores
+del points
+geoadd points 179.5 36 point1
+geoadd points -179.5 36 point2
+geosearch points fromlonlat 179 37 bybox 400 400 km asc
+geosearch points fromlonlat -179 37 bybox 400 400 km asc
+del points
+geoadd points -122.407107 37.794300 1
+geoadd points -122.227336 37.794300 2
+GEORADIUS points -122.407107 37.794300 30 mi ASC WITHDIST
+del mypoints
+geoadd mypoints -32.693072786877423 -43.740016852384443 place:0 3.951673649228951 68.358508785422202 place:1 158.03268837650899 -9.5691773386528638 place:2 79.293778100653412 -11.461124234581888 place:3 33.132829839891201 -21.983453702173868 place:4
+geosearch mypoints fromlonlat 81.634948934258375 30.561509253718668 byradius 7083 km
+del mypoints
+geoadd mypoints 15.204220244290411 -24.371804415421465 place:0 59.356774314938491 19.174521010915996 place:1 -35.55095023268413 37.014226385864532 place:2 -159.16405570654388 34.889454489988026 place:3 172.44414830228504 -35.466465803546114 place:4
+geosearch mypoints fromlonlat -70.863281847379767 -46.347003465679947 byradius 5416 km
+geopos mypoints place:19081
+del mypoints
+geoadd mypoints 25.618106297039503 1.3659855776308092 place:0 -4.8353059519246813 36.171670111907488 place:1 147.23889641800844 1.6069267930495101 place:2 -31.837857985793562 -54.008565034721315 place:3 97.83632941443301 -56.315595631634629 place:4
+geosearch mypoints fromlonlat -12.861432876839046 -63.039807068668217 byradius 116 km
+del mypoints
+geoadd mypoints 95.89203918161428 -24.304573458761247 place:0 84.94425925656418 -39.602373582125814 place:1 -95.381472313488587 1.3979883545069072 place:2 -61.739294920926582 -51.461564005101827 place:3 14.12682750920149 -66.270576108373035 place:4
+geosearch mypoints fromlonlat 147.45160095740653 -8.1443867823781346 byradius 10 km
+del mypoints
+geoadd mypoints -8.7297531530025747 11.157862002665059 place:south_west
+geoadd mypoints -8.7297607494758491 11.220563000540562 place:north_west
+geoadd mypoints -8.6595722314681858 11.18921250160281 place:east
+geoadd mypoints -8.6595760240404918 11.157862002665059 place:south_east
+geoadd mypoints -8.6595684275672173 11.220563000540562 place:north_east
+geoadd mypoints -8.7297569455748807 11.18921250160281 place:west
+geoadd mypoints -8.6946645885215332 11.157862002665059 place:south
+geoadd mypoints -8.6946645885215332 11.220563000540562 place:north
+geosearch mypoints fromlonlat -8.6946645885215332 11.18921250160281 bybox 7663 6978 m
+geosearch mypoints fromlonlat -8.6946645885215332 11.18921250160281 bybox 7655 6978 m
+geosearch mypoints fromlonlat -8.6946645885215332 11.18921250160281 bybox 7663 6970 m
+geosearch mypoints fromlonlat -8.6946645885215332 11.18921250160281 bybox 7655 6970 m
+del mypoints
+geoadd mypoints -84.612779329451811 -54.142505191320573 place:south_west
+geoadd mypoints -84.612702389104186 -54.062128517817989 place:north_west
+geoadd mypoints -84.533343586332265 -54.102316854569281 place:east
+geoadd mypoints -84.533305069113126 -54.142505191320573 place:south_east
+geoadd mypoints -84.533382009460752 -54.062128517817989 place:north_east
+geoadd mypoints -84.612740812232673 -54.102316854569281 place:west
+geoadd mypoints -84.573042199282469 -54.142505191320573 place:south
+geoadd mypoints -84.573042199282469 -54.062128517817989 place:north
+geosearch mypoints fromlonlat -84.573042199282469 -54.102316854569281 bybox 5182 8944 m
+geosearch mypoints fromlonlat -84.573042199282469 -54.102316854569281 bybox 5174 8944 m
+geosearch mypoints fromlonlat -84.573042199282469 -54.102316854569281 bybox 5182 8936 m
+geosearch mypoints fromlonlat -84.573042199282469 -54.102316854569281 bybox 5174 8936 m
+del mypoints
+geoadd mypoints 10.113670110915036 17.42404507113714 place:south_west
+geoadd mypoints 10.113660399607838 17.510301648942932 place:north_west
+geoadd mypoints 10.154665265375275 17.467173360040036 place:east
+geoadd mypoints 10.154660416679478 17.42404507113714 place:south_east
+geoadd mypoints 10.154670127986677 17.510301648942932 place:north_east
+geoadd mypoints 10.113665262219239 17.467173360040036 place:west
+geoadd mypoints 10.134165263797257 17.42404507113714 place:south
+geoadd mypoints 10.134165263797257 17.510301648942932 place:north
+geosearch mypoints fromlonlat 10.134165263797257 17.467173360040036 bybox 4355 9599 m
+geosearch mypoints fromlonlat 10.134165263797257 17.467173360040036 bybox 4347 9599 m
+geosearch mypoints fromlonlat 10.134165263797257 17.467173360040036 bybox 4355 9591 m
+geosearch mypoints fromlonlat 10.134165263797257 17.467173360040036 bybox 4347 9591 m
+del mypoints
+geoadd mypoints 152.13173590595829 54.7963336772114 place:south_west
+geoadd mypoints 152.13165732648503 54.846483686696565 place:north_west
+geoadd mypoints 152.25825627015732 54.821408681953983 place:east
+geoadd mypoints 152.25821701087523 54.7963336772114 place:south_east
+geoadd mypoints 152.2582955903485 54.846483686696565 place:north_east
+geoadd mypoints 152.1316966466762 54.821408681953983 place:west
+geoadd mypoints 152.19497645841676 54.7963336772114 place:south
+geoadd mypoints 152.19497645841676 54.846483686696565 place:north
+geosearch mypoints fromlonlat 152.19497645841676 54.821408681953983 bybox 8115 5582 m
+geosearch mypoints fromlonlat 152.19497645841676 54.821408681953983 bybox 8107 5582 m
+geosearch mypoints fromlonlat 152.19497645841676 54.821408681953983 bybox 8115 5574 m
+geosearch mypoints fromlonlat 152.19497645841676 54.821408681953983 bybox 8107 5574 m
+del mypoints
+geoadd mypoints -113.13151001761047 -13.637125051010264 place:south_west
+geoadd mypoints -113.1315020391261 -13.581077155863165 place:north_west
+geoadd mypoints -113.06412613314093 -13.609101103436714 place:east
+geoadd mypoints -113.06412213939659 -13.637125051010264 place:south_east
+geoadd mypoints -113.06413011788095 -13.581077155863165 place:north_east
+geoadd mypoints -113.13150602386612 -13.609101103436714 place:west
+geoadd mypoints -113.09781607850353 -13.637125051010264 place:south
+geoadd mypoints -113.09781607850353 -13.581077155863165 place:north
+geosearch mypoints fromlonlat -113.09781607850353 -13.609101103436714 bybox 7288 6238 m
+geosearch mypoints fromlonlat -113.09781607850353 -13.609101103436714 bybox 7280 6238 m
+geosearch mypoints fromlonlat -113.09781607850353 -13.609101103436714 bybox 7288 6230 m
+geosearch mypoints fromlonlat -113.09781607850353 -13.609101103436714 bybox 7280 6230 m
+del mypoints
+geoadd mypoints 28.957878157690683 23.735172545743371 place:south_west
+geoadd mypoints 28.957877374896199 23.755095891211123 place:north_west
+geoadd mypoints 28.968112465831258 23.745134218477247 place:east
+geoadd mypoints 28.968112074541299 23.735172545743371 place:south_east
+geoadd mypoints 28.968112857335782 23.755095891211123 place:north_east
+geoadd mypoints 28.957877766400724 23.745134218477247 place:west
+geoadd mypoints 28.962995116115991 23.735172545743371 place:south
+geoadd mypoints 28.962995116115991 23.755095891211123 place:north
+geosearch mypoints fromlonlat 28.962995116115991 23.745134218477247 bybox 1047 2221 m
+geosearch mypoints fromlonlat 28.962995116115991 23.745134218477247 bybox 1039 2221 m
+geosearch mypoints fromlonlat 28.962995116115991 23.745134218477247 bybox 1047 2213 m
+geosearch mypoints fromlonlat 28.962995116115991 23.745134218477247 bybox 1039 2213 m
+del mypoints
+geoadd mypoints 123.66883656154009 -44.698286182478299 place:south_west
+geoadd mypoints 123.66883717029731 -44.672464951348616 place:north_west
+geoadd mypoints 123.67156829237017 -44.685375566913457 place:east
+geoadd mypoints 123.67156859685129 -44.698286182478299 place:south_east
+geoadd mypoints 123.67156798809407 -44.672464951348616 place:north_east
+geoadd mypoints 123.66883686602121 -44.685375566913457 place:west
+geoadd mypoints 123.67020257919569 -44.698286182478299 place:south
+geoadd mypoints 123.67020257919569 -44.672464951348616 place:north
+geosearch mypoints fromlonlat 123.67020257919569 -44.685375566913457 bybox 220 2876 m
+geosearch mypoints fromlonlat 123.67020257919569 -44.685375566913457 bybox 212 2876 m
+geosearch mypoints fromlonlat 123.67020257919569 -44.685375566913457 bybox 220 2868 m
+geosearch mypoints fromlonlat 123.67020257919569 -44.685375566913457 bybox 212 2868 m
+del mypoints
+geoadd mypoints -141.66989934670841 26.868255089300042 place:south_west
+geoadd mypoints -141.66991262670359 26.899974206091663 place:north_west
+geoadd mypoints -141.57527393148763 26.884114647695853 place:east
+geoadd mypoints -141.57528056874077 26.868255089300042 place:south_east
+geoadd mypoints -141.57526728874558 26.899974206091663 place:north_east
+geoadd mypoints -141.66990598396154 26.884114647695853 place:west
+geoadd mypoints -141.62258995772459 26.868255089300042 place:south
+geoadd mypoints -141.62258995772459 26.899974206091663 place:north
+geosearch mypoints fromlonlat -141.62258995772459 26.884114647695853 bybox 9393 3532 m
+geosearch mypoints fromlonlat -141.62258995772459 26.884114647695853 bybox 9385 3532 m
+geosearch mypoints fromlonlat -141.62258995772459 26.884114647695853 bybox 9393 3524 m
+geosearch mypoints fromlonlat -141.62258995772459 26.884114647695853 bybox 9385 3524 m
+del mypoints
+geoadd mypoints 0.4057118841970983 64.195599289240135 place:south_west
+geoadd mypoints 0.40561120276115309 64.281100649979464 place:north_west
+geoadd mypoints 0.47078084341533455 64.2383499696098 place:east
+geoadd mypoints 0.47073058959279518 64.195599289240135 place:south_east
+geoadd mypoints 0.47083127102874039 64.281100649979464 place:north_east
+geoadd mypoints 0.40566163037455893 64.2383499696098 place:west
+geoadd mypoints 0.43822123689494674 64.195599289240135 place:south
+geoadd mypoints 0.43822123689494674 64.281100649979464 place:north
+geosearch mypoints fromlonlat 0.43822123689494674 64.2383499696098 bybox 3153 9515 m
+geosearch mypoints fromlonlat 0.43822123689494674 64.2383499696098 bybox 3145 9515 m
+geosearch mypoints fromlonlat 0.43822123689494674 64.2383499696098 bybox 3153 9507 m
+geosearch mypoints fromlonlat 0.43822123689494674 64.2383499696098 bybox 3145 9507 m
+del mypoints
+geoadd mypoints 95.134962508865669 -4.1929060421679871 place:south_west
+geoadd mypoints 95.134962528848519 -4.1914135893937789 place:north_west
+geoadd mypoints 95.155894881091356 -4.192159815780883 place:east
+geoadd mypoints 95.155894891083676 -4.1929060421679871 place:south_east
+geoadd mypoints 95.155894871100827 -4.1914135893937789 place:north_east
+geoadd mypoints 95.134962518857989 -4.192159815780883 place:west
+geoadd mypoints 95.145428699974673 -4.1929060421679871 place:south
+geoadd mypoints 95.145428699974673 -4.1914135893937789 place:north
+geosearch mypoints fromlonlat 95.145428699974673 -4.192159815780883 bybox 2326 170 m
+geosearch mypoints fromlonlat 95.145428699974673 -4.192159815780883 bybox 2318 170 m
+geosearch mypoints fromlonlat 95.145428699974673 -4.192159815780883 bybox 2326 162 m
+geosearch mypoints fromlonlat 95.145428699974673 -4.192159815780883 bybox 2318 162 m
+del mypoints
+geoadd mypoints -170.16482078819223 67.373644220289691 place:south_west
+geoadd mypoints -170.16482617920732 67.38101657736712 place:north_west
+geoadd mypoints -170.12990419064383 67.377330398828406 place:east
+geoadd mypoints -170.12990688569909 67.373644220289691 place:south_east
+geoadd mypoints -170.12990149468399 67.38101657736712 place:north_east
+geoadd mypoints -170.16482348324749 67.377330398828406 place:west
+geoadd mypoints -170.14736383694566 67.373644220289691 place:south
+geoadd mypoints -170.14736383694566 67.38101657736712 place:north
+geosearch mypoints fromlonlat -170.14736383694566 67.377330398828406 bybox 1499 825 m
+geosearch mypoints fromlonlat -170.14736383694566 67.377330398828406 bybox 1491 825 m
+geosearch mypoints fromlonlat -170.14736383694566 67.377330398828406 bybox 1499 817 m
+geosearch mypoints fromlonlat -170.14736383694566 67.377330398828406 bybox 1491 817 m
+del mypoints
+geoadd mypoints -28.115491670640772 -35.299020570449557 place:south_west
+geoadd mypoints -28.115469828043736 -35.23784798806571 place:north_west
+geoadd mypoints -28.05762454355505 -35.268434279257633 place:east
+geoadd mypoints -28.05761361401148 -35.299020570449557 place:south_east
+geoadd mypoints -28.057635456608516 -35.23784798806571 place:north_east
+geoadd mypoints -28.115480741097201 -35.268434279257633 place:west
+geoadd mypoints -28.086552642326126 -35.299020570449557 place:south
+geoadd mypoints -28.086552642326126 -35.23784798806571 place:north
+geosearch mypoints fromlonlat -28.086552642326126 -35.268434279257633 bybox 5258 6808 m
+geosearch mypoints fromlonlat -28.086552642326126 -35.268434279257633 bybox 5250 6808 m
+geosearch mypoints fromlonlat -28.086552642326126 -35.268434279257633 bybox 5258 6800 m
+geosearch mypoints fromlonlat -28.086552642326126 -35.268434279257633 bybox 5250 6800 m
+del mypoints
+geoadd mypoints 113.93371101700998 2.0732770263040665 place:south_west
+geoadd mypoints 113.93371037141362 2.0983250590085616 place:north_west
+geoadd mypoints 114.01480640940376 2.0858010426563141 place:east
+geoadd mypoints 114.01480608757683 2.0732770263040665 place:south_east
+geoadd mypoints 114.01480673317319 2.0983250590085616 place:north_east
+geoadd mypoints 113.93371069518305 2.0858010426563141 place:west
+geoadd mypoints 113.97425855229341 2.0732770263040665 place:south
+geoadd mypoints 113.97425855229341 2.0983250590085616 place:north
+geosearch mypoints fromlonlat 113.97425855229341 2.0858010426563141 bybox 9018 2791 m
+geosearch mypoints fromlonlat 113.97425855229341 2.0858010426563141 bybox 9010 2791 m
+geosearch mypoints fromlonlat 113.97425855229341 2.0858010426563141 bybox 9018 2783 m
+geosearch mypoints fromlonlat 113.97425855229341 2.0858010426563141 bybox 9010 2783 m
+del mypoints
+geoadd mypoints -151.41030494817264 -66.360181701917583 place:south_west
+geoadd mypoints -151.41019186300363 -66.329235783551155 place:north_west
+geoadd mypoints -151.2268196018689 -66.344708742734369 place:east
+geoadd mypoints -151.22676302108115 -66.360181701917583 place:south_east
+geoadd mypoints -151.22687610625016 -66.329235783551155 place:north_east
+geoadd mypoints -151.4102483673849 -66.344708742734369 place:west
+geoadd mypoints -151.3185339846269 -66.360181701917583 place:south
+geoadd mypoints -151.3185339846269 -66.329235783551155 place:north
+geosearch mypoints fromlonlat -151.3185339846269 -66.344708742734369 bybox 8191 3447 m
+geosearch mypoints fromlonlat -151.3185339846269 -66.344708742734369 bybox 8183 3447 m
+geosearch mypoints fromlonlat -151.3185339846269 -66.344708742734369 bybox 8191 3439 m
+geosearch mypoints fromlonlat -151.3185339846269 -66.344708742734369 bybox 8183 3439 m
+del mypoints
+geoadd mypoints -56.64454928768253 5.2063595698607523 place:south_west
+geoadd mypoints -56.644551241311298 5.2432033738891155 place:north_west
+geoadd mypoints -56.578102780343514 5.2247814718749339 place:east
+geoadd mypoints -56.578103755411895 5.2063595698607523 place:south_east
+geoadd mypoints -56.578101801783127 5.2432033738891155 place:north_east
+geoadd mypoints -56.644550262750911 5.2247814718749339 place:west
+geoadd mypoints -56.611326521547213 5.2063595698607523 place:south
+geoadd mypoints -56.611326521547213 5.2432033738891155 place:north
+geosearch mypoints fromlonlat -56.611326521547213 5.2247814718749339 bybox 7364 4102 m
+geosearch mypoints fromlonlat -56.611326521547213 5.2247814718749339 bybox 7356 4102 m
+geosearch mypoints fromlonlat -56.611326521547213 5.2247814718749339 bybox 7364 4094 m
+geosearch mypoints fromlonlat -56.611326521547213 5.2247814718749339 bybox 7356 4094 m
+del mypoints
+geoadd mypoints 85.442659392431054 42.57865716661437 place:south_west
+geoadd mypoints 85.442659313701526 42.579376420963392 place:north_west
+geoadd mypoints 85.456309993078008 42.579016793788881 place:east
+geoadd mypoints 85.456309953713614 42.57865716661437 place:south_east
+geoadd mypoints 85.456310032443142 42.579376420963392 place:north_east
+geoadd mypoints 85.442659353066659 42.579016793788881 place:west
+geoadd mypoints 85.449484673072334 42.57865716661437 place:south
+geoadd mypoints 85.449484673072334 42.579376420963392 place:north
+geosearch mypoints fromlonlat 85.449484673072334 42.579016793788881 bybox 1123 85 m
+geosearch mypoints fromlonlat 85.449484673072334 42.579016793788881 bybox 1115 85 m
+geosearch mypoints fromlonlat 85.449484673072334 42.579016793788881 bybox 1123 77 m
+geosearch mypoints fromlonlat 85.449484673072334 42.579016793788881 bybox 1115 77 m
+del mypoints
+geoadd mypoints -179.84476651054206 -25.854801561607285 place:south_west
+geoadd mypoints -179.84476642892056 -25.848184421596333 place:north_west
+geoadd mypoints -179.84184925796819 -25.851492991601809 place:east
+geoadd mypoints -179.84184921715388 -25.854801561607285 place:south_east
+geoadd mypoints -179.84184929877537 -25.848184421596333 place:north_east
+geoadd mypoints -179.84476646972774 -25.851492991601809 place:west
+geoadd mypoints -179.84330786384797 -25.854801561607285 place:south
+geoadd mypoints -179.84330786384797 -25.848184421596333 place:north
+geosearch mypoints fromlonlat -179.84330786384797 -25.851492991601809 bybox 296 740 m
+geosearch mypoints fromlonlat -179.84330786384797 -25.851492991601809 bybox 288 740 m
+geosearch mypoints fromlonlat -179.84330786384797 -25.851492991601809 bybox 296 732 m
+geosearch mypoints fromlonlat -179.84330786384797 -25.851492991601809 bybox 288 732 m
+del mypoints
+geoadd mypoints -85.19702809113349 45.711739710171059 place:south_west
+geoadd mypoints -85.197041738795434 45.724254735843942 place:north_west
+geoadd mypoints -85.075165887699654 45.717997223007501 place:east
+geoadd mypoints -85.075172710403052 45.711739710171059 place:south_east
+geoadd mypoints -85.075159062741108 45.724254735843942 place:north_east
+geoadd mypoints -85.197034913836887 45.717997223007501 place:west
+geoadd mypoints -85.136100400768271 45.711739710171059 place:south
+geoadd mypoints -85.136100400768271 45.724254735843942 place:north
+geosearch mypoints fromlonlat -85.136100400768271 45.717997223007501 bybox 9469 1396 m
+geosearch mypoints fromlonlat -85.136100400768271 45.717997223007501 bybox 9461 1396 m
+geosearch mypoints fromlonlat -85.136100400768271 45.717997223007501 bybox 9469 1388 m
+geosearch mypoints fromlonlat -85.136100400768271 45.717997223007501 bybox 9461 1388 m
+del mypoints
+geoadd mypoints 56.898128470504275 -56.96091608988884 place:south_west
+geoadd mypoints 56.898175662133987 -56.894618820268263 place:north_west
+geoadd mypoints 56.95126949597509 -56.927767455078552 place:east
+geoadd mypoints 56.951293117198304 -56.96091608988884 place:south_east
+geoadd mypoints 56.951245925568593 -56.894618820268263 place:north_east
+geoadd mypoints 56.898152091727489 -56.927767455078552 place:west
+geoadd mypoints 56.92471079385129 -56.96091608988884 place:south
+geoadd mypoints 56.92471079385129 -56.894618820268263 place:north
+geosearch mypoints fromlonlat 56.92471079385129 -56.927767455078552 bybox 3229 7379 m
+geosearch mypoints fromlonlat 56.92471079385129 -56.927767455078552 bybox 3221 7379 m
+geosearch mypoints fromlonlat 56.92471079385129 -56.927767455078552 bybox 3229 7371 m
+geosearch mypoints fromlonlat 56.92471079385129 -56.927767455078552 bybox 3221 7371 m
+del mypoints
+geoadd mypoints 151.62077844279995 14.605625181889492 place:south_west
+geoadd mypoints 151.62077477500608 14.67782033717201 place:north_west
+geoadd mypoints 151.64305990244588 14.641722759530751 place:east
+geoadd mypoints 151.64305807106203 14.605625181889492 place:south_east
+geoadd mypoints 151.64306173885589 14.67782033717201 place:north_east
+geoadd mypoints 151.62077661141609 14.641722759530751 place:west
+geoadd mypoints 151.63191825693099 14.605625181889492 place:south
+geoadd mypoints 151.63191825693099 14.67782033717201 place:north
+geosearch mypoints fromlonlat 151.63191825693099 14.641722759530751 bybox 2402 8034 m
+geosearch mypoints fromlonlat 151.63191825693099 14.641722759530751 bybox 2394 8034 m
+geosearch mypoints fromlonlat 151.63191825693099 14.641722759530751 bybox 2402 8026 m
+geosearch mypoints fromlonlat 151.63191825693099 14.641722759530751 bybox 2394 8026 m
+del mypoints
+geoadd mypoints -113.67283212362308 -53.827824555652811 place:south_west
+geoadd mypoints -113.67280988975979 -53.749749496067082 place:north_west
+geoadd mypoints -113.64892756640495 -53.788787025859946 place:east
+geoadd mypoints -113.64891643635561 -53.827824555652811 place:south_east
+geoadd mypoints -113.6489386702189 -53.749749496067082 place:north_east
+geoadd mypoints -113.67282099357374 -53.788787025859946 place:west
+geoadd mypoints -113.66087427998934 -53.827824555652811 place:south
+geoadd mypoints -113.66087427998934 -53.749749496067082 place:north
+geosearch mypoints fromlonlat -113.66087427998934 -53.788787025859946 bybox 1575 8689 m
+geosearch mypoints fromlonlat -113.66087427998934 -53.788787025859946 bybox 1567 8689 m
+geosearch mypoints fromlonlat -113.66087427998934 -53.788787025859946 bybox 1575 8681 m
+geosearch mypoints fromlonlat -113.66087427998934 -53.788787025859946 bybox 1567 8681 m
+del mypoints
+geoadd mypoints 28.374953426834644 -16.455535949578543 place:south_west
+geoadd mypoints 28.374958824261988 -16.413567458313441 place:north_west
+geoadd mypoints 28.42491770174512 -16.434551703945992 place:east
+geoadd mypoints 28.424920402425734 -16.455535949578543 place:south_east
+geoadd mypoints 28.42491500499839 -16.413567458313441 place:north_east
+geoadd mypoints 28.374956127515258 -16.434551703945992 place:west
+geoadd mypoints 28.399936914630189 -16.455535949578543 place:south
+geoadd mypoints 28.399936914630189 -16.413567458313441 place:north
+geosearch mypoints fromlonlat 28.399936914630189 -16.434551703945992 bybox 5334 4672 m
+geosearch mypoints fromlonlat 28.399936914630189 -16.434551703945992 bybox 5326 4672 m
+geosearch mypoints fromlonlat 28.399936914630189 -16.434551703945992 bybox 5334 4664 m
+geosearch mypoints fromlonlat 28.399936914630189 -16.434551703945992 bybox 5326 4664 m
+del mypoints
+geoadd mypoints 123.0717625032474 55.111005322199802 place:south_west
+geoadd mypoints 123.07172005094401 55.158871699126834 place:north_west
+geoadd mypoints 123.14254746250921 55.134938510663318 place:east
+geoadd mypoints 123.14252625217243 55.111005322199802 place:south_east
+geoadd mypoints 123.14256870447582 55.158871699126834 place:north_east
+geoadd mypoints 123.07174129291062 55.134938510663318 place:west
+geoadd mypoints 123.10714437770991 55.111005322199802 place:south
+geoadd mypoints 123.10714437770991 55.158871699126834 place:north
+geosearch mypoints fromlonlat 123.10714437770991 55.134938510663318 bybox 4507 5328 m
+geosearch mypoints fromlonlat 123.10714437770991 55.134938510663318 bybox 4499 5328 m
+geosearch mypoints fromlonlat 123.10714437770991 55.134938510663318 bybox 4507 5320 m
+geosearch mypoints fromlonlat 123.10714437770991 55.134938510663318 bybox 4499 5320 m
+del mypoints
+geoadd mypoints -142.20263003248857 -13.322444415342503 place:south_west
+geoadd mypoints -142.20262626855123 -13.268698134112256 place:north_west
+geoadd mypoints -142.1686681699772 -13.295571274727379 place:east
+geoadd mypoints -142.16866628593226 -13.322444415342503 place:south_east
+geoadd mypoints -142.1686700498696 -13.268698134112256 place:north_east
+geoadd mypoints -142.20262814844364 -13.295571274727379 place:west
+geoadd mypoints -142.18564815921042 -13.322444415342503 place:south
+geoadd mypoints -142.18564815921042 -13.268698134112256 place:north
+geosearch mypoints fromlonlat -142.18564815921042 -13.295571274727379 bybox 3680 5983 m
+geosearch mypoints fromlonlat -142.18564815921042 -13.295571274727379 bybox 3672 5983 m
+geosearch mypoints fromlonlat -142.18564815921042 -13.295571274727379 bybox 3680 5975 m
+geosearch mypoints fromlonlat -142.18564815921042 -13.295571274727379 bybox 3672 5975 m
+del mypoints
+geoadd mypoints -0.16144194193186392 24.049844190731754 place:south_west
+geoadd mypoints -0.16144697366528196 24.067483903641381 place:north_west
+geoadd mypoints -0.088229471989770172 24.058664047186568 place:east
+geoadd mypoints -0.088231987249846794 24.049844190731754 place:south_east
+geoadd mypoints -0.088226955516428757 24.067483903641381 place:north_east
+geoadd mypoints -0.16144445719194056 24.058664047186568 place:west
+geoadd mypoints -0.12483696459085536 24.049844190731754 place:south
+geoadd mypoints -0.12483696459085536 24.067483903641381 place:north
+geosearch mypoints fromlonlat -0.12483696459085536 24.058664047186568 bybox 7440 1966 m
+geosearch mypoints fromlonlat -0.12483696459085536 24.058664047186568 bybox 7432 1966 m
+geosearch mypoints fromlonlat -0.12483696459085536 24.058664047186568 bybox 7440 1958 m
+geosearch mypoints fromlonlat -0.12483696459085536 24.058664047186568 bybox 7432 1958 m
+del mypoints
+geoadd mypoints 94.54080573971703 -44.383605546810543 place:south_west
+geoadd mypoints 94.540822428408077 -44.360085929597702 place:north_west
+geoadd mypoints 94.623926910364204 -44.371845738204122 place:east
+geoadd mypoints 94.623935257260541 -44.383605546810543 place:south_east
+geoadd mypoints 94.623918568569493 -44.360085929597702 place:north_east
+geoadd mypoints 94.540814086613366 -44.371845738204122 place:west
+geoadd mypoints 94.582370498488785 -44.383605546810543 place:south
+geoadd mypoints 94.582370498488785 -44.360085929597702 place:north
+geosearch mypoints fromlonlat 94.582370498488785 -44.371845738204122 bybox 6613 2621 m
+geosearch mypoints fromlonlat 94.582370498488785 -44.371845738204122 bybox 6605 2621 m
+geosearch mypoints fromlonlat 94.582370498488785 -44.371845738204122 bybox 6613 2613 m
+geosearch mypoints fromlonlat 94.582370498488785 -44.371845738204122 bybox 6605 2613 m
+del mypoints
+geoadd mypoints -123.35848521709762 -7.0562703375498046 place:south_west
+geoadd mypoints -123.35848494021833 -6.9789504950305457 place:north_west
+geoadd mypoints -123.35515153551619 -7.0176104162901751 place:east
+geoadd mypoints -123.35515139668563 -7.0562703375498046 place:south_east
+geoadd mypoints -123.35515167356492 -6.9789504950305457 place:north_east
+geoadd mypoints -123.35848507826707 -7.0176104162901751 place:west
+geoadd mypoints -123.35681830689163 -7.0562703375498046 place:south
+geoadd mypoints -123.35681830689163 -6.9789504950305457 place:north
+geosearch mypoints fromlonlat -123.35681830689163 -7.0176104162901751 bybox 372 8604 m
+geosearch mypoints fromlonlat -123.35681830689163 -7.0176104162901751 bybox 364 8604 m
+geosearch mypoints fromlonlat -123.35681830689163 -7.0176104162901751 bybox 372 8596 m
+geosearch mypoints fromlonlat -123.35681830689163 -7.0176104162901751 bybox 364 8596 m
+del mypoints
+geoadd mypoints -28.749263710582621 64.510270934228544 place:south_west
+geoadd mypoints -28.749568333822094 64.593488662409726 place:north_west
+geoadd mypoints -28.549805924180372 64.551879798319135 place:east
+geoadd mypoints -28.549957977041235 64.510270934228544 place:south_east
+geoadd mypoints -28.549653353801762 64.593488662409726 place:north_east
+geoadd mypoints -28.749415763443483 64.551879798319135 place:west
+geoadd mypoints -28.649610843811928 64.510270934228544 place:south
+geoadd mypoints -28.649610843811928 64.593488662409726 place:north
+geosearch mypoints fromlonlat -28.649610843811928 64.551879798319135 bybox 9545 9260 m
+geosearch mypoints fromlonlat -28.649610843811928 64.551879798319135 bybox 9537 9260 m
+geosearch mypoints fromlonlat -28.649610843811928 64.551879798319135 bybox 9545 9252 m
+geosearch mypoints fromlonlat -28.649610843811928 64.551879798319135 bybox 9537 9252 m
+del mypoints
+geoadd mypoints 113.39234471356595 -38.117431469017838 place:south_west
+geoadd mypoints 113.3923568589932 -38.070338290515984 place:north_west
+geoadd mypoints 113.43004991178736 -38.093884879766911 place:east
+geoadd mypoints 113.4300559880492 -38.117431469017838 place:south_east
+geoadd mypoints 113.43004384262196 -38.070338290515984 place:north_east
+geoadd mypoints 113.39235078982779 -38.093884879766911 place:west
+geoadd mypoints 113.41120035080758 -38.117431469017838 place:south
+geoadd mypoints 113.41120035080758 -38.070338290515984 place:north
+geosearch mypoints fromlonlat 113.41120035080758 -38.093884879766911 bybox 3305 5243 m
+geosearch mypoints fromlonlat 113.41120035080758 -38.093884879766911 bybox 3297 5243 m
+geosearch mypoints fromlonlat 113.41120035080758 -38.093884879766911 bybox 3305 5235 m
+geosearch mypoints fromlonlat 113.41120035080758 -38.093884879766911 bybox 3297 5235 m

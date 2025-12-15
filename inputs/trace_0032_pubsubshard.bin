@@ -1,0 +1,88 @@
+PING
+select 9
+select 9
+ssubscribe chan1
+ssubscribe chan2
+SPUBLISH chan1 hello
+SPUBLISH chan2 world
+sunsubscribe chan1
+SPUBLISH chan1 hello
+SPUBLISH chan2 world
+sunsubscribe chan2
+SPUBLISH chan1 hello
+SPUBLISH chan2 world
+select 9
+select 9
+ssubscribe chan1
+ssubscribe chan1
+SPUBLISH chan1 hello
+select 9
+ssubscribe chan1
+ssubscribe chan2
+ssubscribe chan3
+sunsubscribe
+client list
+SPUBLISH chan1 hello
+SPUBLISH chan2 hello
+SPUBLISH chan3 hello
+select 9
+ssubscribe chan1 chan1 chan1
+SPUBLISH chan1 hello
+select 9
+sunsubscribe foo
+sunsubscribe bar
+sunsubscribe quux
+pubsub shardnumsub abc def
+select 9
+select 9
+ssubscribe chan1
+ssubscribe chan1
+SPUBLISH chan1 hello
+pubsub shardnumsub chan1
+pubsub shardchannels
+select 9
+select 9
+ssubscribe chan1
+subscribe chan1
+SPUBLISH chan1 hello
+publish chan1 hello
+pubsub shardnumsub chan1
+pubsub numsub chan1
+pubsub shardchannels
+pubsub channels
+select 9
+hello 3
+client reply off
+ping
+ssubscribe channel
+client reply off
+spublish channel hello
+ping
+client reply off
+ping
+sunsubscribe channel
+PING
+select 9
+PING
+select 9
+replicaof 127.0.0.1 21613
+PING
+info
+REPLCONF listening-port 21612
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC f498128b68f90dd29f6ceedf944afae9fdd42dcd 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21612
+PSYNC ? -1
+REPLCONF ACK 0
+info
+select 9
+select 9
+ssubscribe chan1
+SPUBLISH chan1 hello
+SELECT 9
+SPUBLISH chan1 hello
+SPUBLISH chan1 world
+SPUBLISH chan1 world
+REPLCONF GETACK *
+REPLCONF ACK 103
+REPLCONF ACK 140

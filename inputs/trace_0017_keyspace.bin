@@ -1,0 +1,412 @@
+PING
+select 9
+set x foo
+get x
+del x
+get x
+set foo1{t} a
+set foo2{t} b
+set foo3{t} c
+del foo1{t} foo2{t} foo3{t} foo4{t}
+mget foo1{t} foo2{t} foo3{t}
+mset foo1 a foo2 b foo3 c
+mget foo1 foo2 foo3 foo4
+del foo1 foo2 foo3 foo4
+set key_x hello
+set key_y hello
+set key_z hello
+set foo_a hello
+set foo_b hello
+set foo_c hello
+keys foo*
+keys *
+dbsize
+set {a}x hello
+set {a}y hello
+set {a}z hello
+set {b}a hello
+set {b}b hello
+set {b}c hello
+keys {a}*
+keys *{b}*
+keys *
+del foo_a
+del key_x
+del {b}b
+del {a}x
+del foo_b
+del {a}z
+dbsize
+debug set-active-expire 0
+setex keyExpire 1 valExpire
+del keyExpire
+debug set-active-expire 1
+set newkey test
+exists newkey
+del newkey
+exists newkey
+set emptykey 
+get emptykey
+exists emptykey
+del emptykey
+exists emptykey
+SET k1 xyzk
+GET k1
+PING
+foobaredcommand
+set mykey{t} hello
+rename mykey{t} mykey1{t}
+rename mykey1{t} mykey2{t}
+get mykey2{t}
+exists mykey
+set mykey{t} a
+set mykey2{t} b
+rename mykey2{t} mykey{t}
+get mykey{t}
+exists mykey2{t}
+del mykey{t}
+del mykey2{t}
+set mykey{t} foobar
+renamenx mykey{t} mykey2{t}
+get mykey2{t}
+exists mykey{t}
+set mykey{t} foo
+set mykey2{t} bar
+renamenx mykey{t} mykey2{t}
+get mykey{t}
+get mykey2{t}
+rename nokey{t} foobar{t}
+set mykey foo
+rename mykey mykey
+set mykey foo
+renamenx mykey mykey
+del mykey
+rename mykey mykey
+del mykey{t} mykey2{t}
+set mykey{t} foo
+expire mykey{t} 100
+ttl mykey{t}
+ttl mykey{t}
+rename mykey{t} mykey2{t}
+ttl mykey2{t}
+ttl mykey2{t}
+del mykey{t} mykey2{t}
+set mykey{t} foo
+set mykey2{t} bar
+expire mykey2{t} 100
+ttl mykey{t}
+ttl mykey2{t}
+rename mykey{t} mykey2{t}
+ttl mykey2{t}
+keys *
+del mykey2{t}
+del k1
+dbsize
+select 10
+keys *
+dbsize
+select 9
+set mykey{t} foobar
+copy mykey{t} mynewkey{t}
+get mynewkey{t}
+dbsize
+copy mykey{t} mynewkey{t} DB 10
+select 10
+get mynewkey{t}
+dbsize
+select 9
+set mykey2{t} hello
+copy mykey2{t} mynewkey{t} DB 10
+copy mykey2{t} mynewkey{t} DB 10 REPLACE
+select 10
+get mynewkey{t}
+flushdb
+select 9
+set mykey{t} foobar
+copy mykey{t} mynewkey{t} DB 10
+select 10
+get mynewkey{t}
+set mynewkey{t} hoge
+get mynewkey{t}
+select 9
+get mykey{t}
+select 10
+flushdb
+select 9
+set mykey{t} foobar
+copy mykey{t} mynewkey{t} DB notanumber
+set mykey{t} foobar ex 100
+copy mykey{t} mynewkey{t} REPLACE
+ttl mynewkey{t}
+ttl mynewkey{t}
+get mynewkey{t}
+set mykey{t} foobar
+ttl mykey{t}
+copy mykey{t} mynewkey{t} REPLACE
+ttl mynewkey{t}
+get mynewkey{t}
+config get list-max-listpack-size
+config set list-max-listpack-size -1
+del mylist{t} mynewlist{t}
+lpush mylist{t} a b xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx... c d
+object encoding mylist{t}
+copy mylist{t} mynewlist{t}
+object encoding mynewlist{t}
+debug digest-value mylist{t}
+debug digest-value mynewlist{t}
+object refcount mylist{t}
+object refcount mynewlist{t}
+del mylist{t}
+debug digest-value mynewlist{t}
+config set list-max-listpack-size -2
+config get list-max-listpack-size
+config set list-max-listpack-size -1
+del mylist{t} mynewlist{t}
+lpush mylist{t} a b hello c d
+object encoding mylist{t}
+copy mylist{t} mynewlist{t}
+object encoding mynewlist{t}
+debug digest-value mylist{t}
+debug digest-value mynewlist{t}
+object refcount mylist{t}
+object refcount mynewlist{t}
+del mylist{t}
+debug digest-value mynewlist{t}
+config set list-max-listpack-size -2
+del set1{t} newset1{t}
+sadd set1{t} 1 2 3
+object encoding set1{t}
+copy set1{t} newset1{t}
+debug digest-value set1{t}
+debug digest-value newset1{t}
+object refcount set1{t}
+object refcount newset1{t}
+del set1{t}
+debug digest-value newset1{t}
+del set1{t} newset1{t}
+sadd set1{t} 1 2 3
+sadd set1{t} a
+object encoding set1{t}
+copy set1{t} newset1{t}
+debug digest-value set1{t}
+debug digest-value newset1{t}
+object refcount set1{t}
+object refcount newset1{t}
+del set1{t}
+debug digest-value newset1{t}
+del set1{t} newset1{t}
+sadd set1{t} 1 2 3
+sadd set1{t} a
+sadd set1{t} 4
+sadd set1{t} 5
+sadd set1{t} 6
+sadd set1{t} 7
+object encoding set1{t}
+copy set1{t} newset1{t}
+debug digest-value set1{t}
+debug digest-value newset1{t}
+object refcount set1{t}
+object refcount newset1{t}
+del set1{t}
+debug digest-value newset1{t}
+del zset1{t} newzset1{t}
+zadd zset1{t} 123 foobar
+object encoding zset1{t}
+copy zset1{t} newzset1{t}
+debug digest-value zset1{t}
+debug digest-value newzset1{t}
+object refcount zset1{t}
+object refcount newzset1{t}
+del zset1{t}
+debug digest-value newzset1{t}
+del zset2{t} newzset2{t}
+config get zset-max-ziplist-entries
+config set zset-max-ziplist-entries 0
+zadd zset2{t} 33 ele-9
+zadd zset2{t} 1 ele-3
+zadd zset2{t} 34 ele-7
+zadd zset2{t} 30 ele-9
+zadd zset2{t} 38 ele-7
+zadd zset2{t} 10 ele-9
+zadd zset2{t} 42 ele-3
+object encoding zset2{t}
+copy zset2{t} newzset2{t}
+debug digest-value zset2{t}
+debug digest-value newzset2{t}
+object refcount zset2{t}
+object refcount newzset2{t}
+del zset2{t}
+debug digest-value newzset2{t}
+config set zset-max-ziplist-entries 128
+config set hash-max-listpack-entries 512
+del hash1{t} newhash1{t}
+hset hash1{t} tmp 17179869184
+object encoding hash1{t}
+copy hash1{t} newhash1{t}
+debug digest-value hash1{t}
+debug digest-value newhash1{t}
+object refcount hash1{t}
+object refcount newhash1{t}
+del hash1{t}
+debug digest-value newhash1{t}
+del hash2{t} newhash2{t}
+config get hash-max-ziplist-entries
+config set hash-max-ziplist-entries 0
+hset hash2{t} ˜nÂ3,™û#Øõ≈–±ÇûXW5∫=ﬁÙè5±˛Kÿﬂ v˙,˙µ®‚7|•ìkîˆnŒ•pa|ùdßŒ|Ó©√... -443571996
+hset hash2{t} 967 1^aFe8<yaN1mS4Ly@7i52:DKIE@rJMmm<6nK:9R0?vZZp@nRkpWp=lSnh1a1pg[L...
+hset hash2{t} -701 `zxox2`XT^<@QQ^I:]nnq^wUa@@nDlXtWcNryb:uLaHt?
+hset hash2{t} 523982999 -918
+hset hash2{t} -1502789376 -635957432275
+hset hash2{t} -906 942704068
+hset hash2{t} 368 805764825458
+object encoding hash2{t}
+copy hash2{t} newhash2{t}
+debug digest-value hash2{t}
+debug digest-value newhash2{t}
+object refcount hash2{t}
+object refcount newhash2{t}
+del hash2{t}
+debug digest-value newhash2{t}
+config set hash-max-ziplist-entries 512
+del mystream{t} mynewstream{t}
+XADD mystream{t} * item 2 value b
+XADD mystream{t} * item 2 value b
+XADD mystream{t} * item 2 value b
+XADD mystream{t} * item 2 value b
+XADD mystream{t} * item 2 value b
+XADD mystream{t} * item 2 value b
+XADD mystream{t} * item 2 value b
+copy mystream{t} mynewstream{t}
+debug digest-value mystream{t}
+debug digest-value mynewstream{t}
+object refcount mystream{t}
+object refcount mynewstream{t}
+del mystream{t}
+debug digest-value mynewstream{t}
+del x{t}
+XADD x{t} 100 a 1
+XADD x{t} 101 b 1
+XADD x{t} 102 c 1
+XADD x{t} 103 e 1
+XADD x{t} 104 f 1
+XADD x{t} 105 g 1
+XGROUP CREATE x{t} g1 0
+XGROUP CREATE x{t} g2 0
+XREADGROUP GROUP g1 Alice COUNT 1 STREAMS x{t} >
+XREADGROUP GROUP g1 Bob COUNT 1 STREAMS x{t} >
+XREADGROUP GROUP g1 Bob NOACK COUNT 1 STREAMS x{t} >
+XREADGROUP GROUP g2 Charlie COUNT 4 STREAMS x{t} >
+XGROUP SETID x{t} g1 101-0
+XREADGROUP GROUP g1 Dave COUNT 3 STREAMS x{t} >
+XDEL x{t} 103
+copy x{t} newx{t}
+xinfo stream x{t} full
+xinfo stream newx{t} full
+object refcount x{t}
+object refcount newx{t}
+del x{t}
+xinfo stream newx{t} full
+flushdb
+set mykey foobar
+move mykey 10
+exists mykey
+dbsize
+select 10
+get mykey
+dbsize
+select 9
+set mykey hello
+move mykey 10
+set mykey hello
+move mykey notanumber
+select 10
+flushdb
+select 9
+set mykey foo ex 100
+move mykey 10
+ttl mykey
+select 10
+ttl mykey
+ttl mykey
+get mykey
+select 9
+select 10
+flushdb
+select 9
+set mykey foo
+move mykey 10
+ttl mykey
+select 10
+ttl mykey
+get mykey
+select 9
+set a hello
+set b world
+select 10
+set a foo
+set b bared
+select 9
+get a
+get b
+select 10
+get a
+get b
+select 9
+flushdb
+set foo x
+set bar y
+randomkey
+randomkey
+randomkey
+randomkey
+randomkey
+randomkey
+randomkey
+flushdb
+randomkey
+flushdb
+set x 10
+del x
+randomkey
+flushdb
+set dlskeriewrioeuwqoirueioqwrueoqwrueqw test
+keys *
+keys *
+flushdb
+SET aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 1
+KEYS a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*a*b
+flushdb
+SET aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa... 1
+KEYS *?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?*?...
+flushall
+select 0
+set swapkey v1
+select 1
+dbsize
+swapdb 0 1
+dbsize
+select 0
+dbsize
+flushall
+swapdb 44 55
+swapdb 44 a
+swapdb a 55
+swapdb a b
+swapdb 0 0
+flushall
+select 0
+set swapkey v1
+select 1
+set swapkey1 v1
+info keyspace
+swapdb 0 2
+select 0
+dbsize
+info keyspace
+select 2
+flushdb
+dbsize
+info keyspace
+info keyspace
+info keyspace
+flushall

@@ -1,0 +1,70 @@
+PING
+select 9
+CONFIG SET port 21112
+PING
+CONFIG SET port 21079
+PING
+PING
+select 9
+CONFIG SET bind 999.999.999.999
+PING
+PING
+select 9
+PING
+select 9
+config set protected-mode no
+config set bind-source-addr 127.0.0.2
+replicaof 127.0.0.1 21114
+PING
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 63a2f8a63035e3c7cb4db8b16a78f2684d289713 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21115
+PSYNC ? -1
+REPLCONF ACK 0
+info
+info
+PING
+select 9
+CONFIG GET bind
+CONFIG REWRITE
+CONFIG SET bind 
+CONFIG GET bind
+CONFIG REWRITE
+config get bind
+config set bind *
+select 9
+ping
+config set bind *
+config set requirepass secret
+auth secret
+ping
+config set requirepass 
+config set protected-mode no
+ping
+PING
+select 9
+config set timeout 1
+select 9
+ping
+select 9
+ping
+select 9
+ping
+select 9
+ping
+select 9
+ping
+PING
+select 9
+select 9
+select 9
+blpop mylist 0
+info
+set bkey bvalue
+lpush mylist unblock_value
+set key1 value1
+set key2 value2
+set key3 value3
+set key4 value4
+set key5 value5
+set key6 value6

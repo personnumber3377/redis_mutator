@@ -1,0 +1,139 @@
+PING
+select 9
+slowlog len
+config set slowlog-log-slower-than 100000
+ping
+slowlog len
+debug sleep 0.2
+slowlog len
+SLOWLOG reset
+config set slowlog-max-len 0
+config set slowlog-log-slower-than 0
+ping
+ping
+ping
+ping
+ping
+ping
+ping
+slowlog len
+config set slowlog-log-slower-than 0
+config set slowlog-max-len 10
+ping
+ping
+ping
+ping
+ping
+ping
+ping
+slowlog len
+slowlog get 5
+slowlog get -1
+slowlog get 20
+config set slowlog-log-slower-than 100000
+slowlog reset
+slowlog len
+client setname foobar
+debug sleep 0.2
+slowlog get
+config set slowlog-max-len 100
+config set slowlog-log-slower-than 0
+slowlog reset
+acl setuser slowlog test user +get +set
+config set masteruser 
+config set masterauth 
+config set requirepass 
+config set tls-key-file-pass 
+config set tls-client-key-file-pass 
+acl setuser slowlog-test-user +get +set
+acl getuser slowlog-test-user
+acl deluser slowlog-test-user non-existing-user
+config set slowlog-log-slower-than 0
+config set slowlog-log-slower-than -1
+slowlog get -1
+config set slowlog-log-slower-than 0
+slowlog reset
+migrate 127.0.0.1 22111 key 9 5000
+migrate 127.0.0.1 22111 key 9 5000 AUTH user
+migrate 127.0.0.1 22111 key 9 5000 AUTH2 user password
+config set slowlog-log-slower-than -1
+slowlog get
+config set slowlog-log-slower-than 0
+sadd set a b c d e
+slowlog reset
+spop set 10
+slowlog get
+slowlog reset
+geoadd cool-cities -122.33207 47.60621 Seattle
+slowlog get
+set A 5
+slowlog reset
+getset a 5
+slowlog get
+set A 0
+slowlog reset
+INCRBYFLOAT A 1.0
+slowlog get
+select 9
+blpop l 0
+info
+multi
+lpush l foo
+slowlog reset
+exec
+slowlog get
+config set slowlog-log-slower-than 0
+slowlog reset
+sadd set 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33
+slowlog get
+config set slowlog-log-slower-than 0
+slowlog reset
+sadd set foo AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA...
+slowlog get
+config set slowlog-log-slower-than 100000
+slowlog reset
+slowlog len
+multi
+debug sleep 0.2
+exec
+slowlog len
+slowlog get
+client setname lastentry_client
+config set slowlog-max-len 1
+debug sleep 0.2
+slowlog get
+slowlog get
+config set slowlog-max-len 1
+config set slowlog-log-slower-than 1
+slowlog reset
+debug sleep 0.2
+slowlog len
+config set slowlog-log-slower-than -1
+slowlog reset
+debug sleep 0.2
+slowlog len
+slowlog get -2
+slowlog get -222
+config set slowlog-log-slower-than 0
+config set slowlog-max-len 3
+slowlog reset
+set key test
+sadd set a b c
+incr num
+lpush list a
+slowlog len
+slowlog get 0
+slowlog get 1
+slowlog get -1
+slowlog get 3
+del mylist
+select 9
+config set slowlog-log-slower-than 0
+config set slowlog-max-len 110
+slowlog reset
+BLPOP mylist 0
+info
+slowlog get
+LPUSH mylist 1
+info
+slowlog get

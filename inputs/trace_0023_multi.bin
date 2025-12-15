@@ -1,0 +1,516 @@
+PING
+select 9
+del mylist
+rpush mylist a
+rpush mylist b
+rpush mylist c
+multi
+lrange mylist 0 -1
+ping
+exec
+del mylist
+rpush mylist a
+rpush mylist b
+rpush mylist c
+multi
+del mylist
+discard
+lrange mylist 0 -1
+multi
+multi
+exec
+sadd myset a
+multi
+spop myset
+exec
+exists myset
+multi
+watch x
+exec
+del foo1{t} foo2{t}
+multi
+set foo1{t} bar1
+non-existing-command
+set foo2{t} bar2
+exec
+exists foo1{t}
+exists foo2{t}
+select 9
+del foo1{t} foo2{t}
+multi
+set foo1{t} bar1
+config set maxmemory 1
+lpush mylist{t} myvalue
+config set maxmemory 0
+set foo2{t} bar2
+exec
+exists foo1{t}
+exists foo2{t}
+del foo1{t} foo2{t}
+multi
+set foo1{t} bar1
+non-existing-command
+set foo2{t} bar2
+exec
+ping
+watch x{t} y{t} z{t}
+watch k{t}
+multi
+ping
+exec
+set x 30
+watch x
+set x 40
+multi
+ping
+exec
+set x{t} 30
+watch a{t} b{t} x{t} k{t} z{t}
+set x{t} 40
+multi
+ping
+exec
+flushdb
+lpush foo bar
+watch foo
+sort emptylist store foo
+multi
+ping
+exec
+del key
+debug set-active-expire 0
+set key 1 px 100
+watch key
+multi
+incr key
+exec
+debug set-active-expire 1
+del x
+debug set-active-expire 0
+set x foo px 1
+watch x
+multi
+ping
+exec
+debug set-active-expire 1
+del x
+debug set-active-expire 0
+set x foo px 1
+watch x
+exists x
+multi
+ping
+exec
+debug set-active-expire 1
+del x
+debug set-active-expire 0
+set x foo px 1
+watch x
+flushdb
+multi
+ping
+exec
+debug set-active-expire 1
+set x 30
+watch x
+multi
+ping
+exec
+set x 40
+multi
+ping
+exec
+set x 30
+watch x
+set x 40
+multi
+ping
+exec
+set x 40
+multi
+ping
+exec
+set x 30
+watch x
+set x 40
+unwatch
+multi
+ping
+exec
+unwatch
+set x 30
+watch x
+flushall
+multi
+ping
+exec
+del x
+watch x
+flushall
+multi
+ping
+exec
+set x 30
+watch x
+flushdb
+multi
+ping
+exec
+del x
+watch x
+flushdb
+multi
+ping
+exec
+flushall
+select 0
+set x 30
+watch x
+swapdb 0 1
+multi
+ping
+exec
+flushall
+select 1
+set x 30
+select 0
+watch x
+swapdb 0 1
+multi
+ping
+exec
+flushall
+select 1
+debug set-active-expire 0
+set x foo px 1
+watch x
+swapdb 0 1
+multi
+ping
+exec
+debug set-active-expire 1
+flushall
+select 0
+debug set-active-expire 0
+set x foo px 1
+select 1
+watch x
+swapdb 0 1
+multi
+ping
+exec
+debug set-active-expire 1
+flushall
+debug set-active-expire 0
+select 1
+set x foo px 1
+select 0
+set x bar px 1
+select 1
+watch x
+swapdb 0 1
+multi
+ping
+exec
+debug set-active-expire 1
+select 5
+set x 30
+watch x
+select 1
+set x 10
+select 5
+multi
+ping
+exec
+select 9
+del x
+set x foo
+watch x
+expire x 10
+multi
+ping
+exec
+flushall
+del x
+set x foo
+expire x 1
+watch x
+select 9
+dbsize
+dbsize
+dbsize
+dbsize
+dbsize
+dbsize
+multi
+ping
+exec
+watch x
+set x 10
+multi
+discard
+multi
+incr x
+exec
+watch x
+set x 10
+multi
+discard
+set x 10
+multi
+incr x
+exec
+config set repl-ping-replica-period 3600
+SYNC
+multi
+set foo bar
+exec
+set foo2 bar
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+multi
+set foo{t} bar
+get foo{t}
+set foo2{t} bar2
+get foo2{t}
+set foo3{t} bar3
+get foo3{t}
+exec
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+multi
+select 1
+set foo{t} bar
+get foo{t}
+select 2
+set foo2{t} bar2
+get foo2{t}
+exec
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+multi
+exec
+set foo bar
+config set repl-ping-replica-period 10
+set foo value1
+config set repl-ping-replica-period 3600
+SYNC
+multi
+get foo
+exec
+set foo value2
+config set repl-ping-replica-period 10
+del bar
+del foo
+config set repl-ping-replica-period 3600
+SYNC
+multi
+del foo
+exec
+incr foo
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+set foo bar
+multi
+set foo2 bar
+replicaof localhost 9999
+set foo3 bar
+exec
+set foo4 bar
+replicaof no one
+select 9
+config set maxmemory 1
+multi
+set x 1
+discard
+config set maxmemory 0
+ping
+select 9
+select 9
+config set lua-time-limit 10
+set xx 1
+eval while true do end 0
+multi
+incr xx
+script kill
+incr xx
+exec
+get xx
+ping asdf
+select 9
+select 9
+config set lua-time-limit 10
+set xx 1
+multi
+incr xx
+eval while true do end 0
+incr xx
+exec
+script kill
+get xx
+ping asdf
+select 9
+select 9
+config set lua-time-limit 10
+set xx 1
+multi
+incr xx
+eval while true do end 0
+incr xx
+script kill
+exec
+get xx
+ping asdf
+select 9
+select 9
+config set lua-time-limit 10
+set xx 1
+multi
+incr xx
+eval while true do end 0
+exec
+script kill
+get xx
+ping asdf
+select 9
+set xx 1
+multi
+incr xx
+config set min-replicas-to-write 2
+exec
+get xx
+config set min-replicas-to-write 0
+config set replica-serve-stale-data no
+select 9
+set xx 1
+multi
+get xx
+replicaof localhsot 0
+exec
+replicaof no one
+multi
+ping
+replicaof localhsot 0
+exec
+multi
+replicaof no one
+get xx
+exec
+select 9
+set x value
+multi
+get x
+ping
+config set maxmemory 1
+exec
+config set maxmemory 0
+select 9
+multi
+set x 1
+get x
+config set maxmemory 1
+exec
+config set maxmemory 0
+xgroup create s{t} g $ MKSTREAM
+multi
+blpop empty_list{t} 0
+brpop empty_list{t} 0
+brpoplpush empty_list1{t} empty_list2{t} 0
+blmove empty_list1{t} empty_list2{t} LEFT LEFT 0
+bzpopmin empty_zset{t} 0
+bzpopmax empty_zset{t} 0
+xread BLOCK 0 STREAMS s{t} $
+xreadgroup group g c BLOCK 0 STREAMS s{t} >
+exec
+config set repl-ping-replica-period 3600
+SYNC
+multi
+publish bla bla
+exec
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+multi
+script load redis.call('set', KEYS[1], 'foo')
+set foo bar
+exec
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+multi
+eval redis.call('set', KEYS[1], 'bar') 1 bar
+exec
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+multi
+script flush
+set foo bar
+exec
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+XADD mystream * foo bar
+XADD mystream * foo2 bar2
+XADD mystream * foo3 bar3
+XGROUP CREATE mystream mygroup 0
+multi
+XREADGROUP GROUP mygroup consumer1 COUNT 2 STREAMS mystream >
+XREADGROUP GROUP mygroup consumer1 STREAMS mystream >
+exec
+config set repl-ping-replica-period 10
+del foo
+multi
+set foo bar
+SAVE
+exec
+get foo
+del foo
+multi
+set foo bar
+SHUTDOWN
+exec
+get foo
+info
+multi
+set foo bar
+BGREWRITEAOF
+exec
+info
+info
+info
+info
+info
+info
+multi
+set foo bar
+config set appendonly yes
+exec
+info
+info
+info
+info
+info
+multi
+set foo bar
+config set maxmemory bla
+exec
+flushall
+mset a{t} a b{t} b
+watch b{t} a{t}
+flushall
+ping
+PING
+select 9
+config get dir
+config get appenddirname
+config get appendfilename
+multi
+set foo bar
+flushall
+exec
+get foo

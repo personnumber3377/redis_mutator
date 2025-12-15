@@ -1,0 +1,267 @@
+PING
+select 9
+del tosort
+lpush tosort 0
+set weight_0 654187
+hset wobj_0 weight 654187
+lpush tosort 1
+set weight_1 0.26646072709302454
+hset wobj_1 weight 0.26646072709302454
+object encoding tosort
+sort tosort BY weight_*
+sort tosort BY weight_* LIMIT 5 5
+sort tosort BY wobj_*->weight
+del tosort
+lpush tosort 0
+set weight_0 817384
+hset wobj_0 weight 817384
+lpush tosort 1
+set weight_1 0.42751276093884966
+hset wobj_1 weight 0.42751276093884966
+object encoding tosort
+sort tosort BY weight_*
+sort tosort BY weight_* LIMIT 5 5
+sort tosort BY wobj_*->weight
+del tosort
+lpush tosort 0
+set weight_0 0.59210904761781402
+hset wobj_0 weight 0.59210904761781402
+lpush tosort 1
+set weight_1 0.66099488346883783
+hset wobj_1 weight 0.66099488346883783
+object encoding tosort
+sort tosort BY weight_*
+sort tosort BY weight_* LIMIT 5 5
+sort tosort BY wobj_*->weight
+del tosort
+sadd tosort 0
+set weight_0 0.16627336021804873
+hset wobj_0 weight 0.16627336021804873
+sadd tosort 1
+set weight_1 0.82966000904778947
+hset wobj_1 weight 0.82966000904778947
+object encoding tosort
+sort tosort BY weight_*
+sort tosort BY weight_* LIMIT 5 5
+sort tosort BY wobj_*->weight
+del tosort
+sadd tosort 0
+set weight_0 0.26021922624680177
+hset wobj_0 weight 0.26021922624680177
+sadd tosort 1
+set weight_1 0.72865266712785359
+hset wobj_1 weight 0.72865266712785359
+object encoding tosort
+sort tosort BY weight_*
+sort tosort BY weight_* LIMIT 5 5
+sort tosort BY wobj_*->weight
+del tosort
+sadd tosort 0
+set weight_0 0.47642907475886359
+hset wobj_0 weight 0.47642907475886359
+sadd tosort 1
+set weight_1 523349
+hset wobj_1 weight 523349
+object encoding tosort
+sort tosort BY weight_*
+sort tosort BY weight_* LIMIT 5 5
+sort tosort BY wobj_*->weight
+del tosort
+lpush tosort 0
+set weight_0 170236
+hset wobj_0 weight 170236
+lpush tosort 1
+set weight_1 837689
+hset wobj_1 weight 837689
+sort tosort GET #
+del foo
+SORT tosort GET foo
+del foo
+SORT_RO tosort GET foo
+sort tosort GET # GET weight_*
+sort tosort GET # GET wobj_*->weight
+get weight_0
+get weight_0
+get weight_1
+get weight_1
+get weight_2
+get weight_2
+get weight_15
+get weight_15
+sort tosort BY weight_* store sort-res
+lrange sort-res 0 -1
+llen sort-res
+config get list-max-ziplist-size
+llen sort-res
+object encoding sort-res
+sort tosort BY wobj_*->weight store sort-res
+lrange sort-res 0 -1
+llen sort-res
+config get list-max-ziplist-size
+llen sort-res
+object encoding sort-res
+command getkeys sort abc store def
+command getkeys sort_ro abc
+command getkeys sort abc store invalid store stillbad store def
+sort tosort DESC
+del mylist
+lpush mylist 2
+lpush mylist 1
+lpush mylist 3
+lpush mylist 10
+sort mylist alpha
+del zset
+zadd zset 1 a
+zadd zset 5 b
+zadd zset 2 c
+zadd zset 10 d
+zadd zset 3 e
+sort zset alpha desc
+del zset
+zadd zset 1 a
+zadd zset 5 b
+zadd zset 2 c
+zadd zset 10 d
+zadd zset 3 e
+multi
+sort zset by nosort asc
+sort zset by nosort desc
+exec
+del zset
+zadd zset 1 a
+zadd zset 5 b
+zadd zset 2 c
+zadd zset 10 d
+zadd zset 3 e
+sort zset by nosort asc limit 0 1
+sort zset by nosort desc limit 0 1
+sort zset by nosort asc limit 0 2
+sort zset by nosort desc limit 0 2
+sort zset by nosort limit 5 10
+sort zset by nosort limit -10 100
+del zset
+zadd zset 1 a
+zadd zset 5 b
+zadd zset 2 c
+zadd zset 10 d
+zadd zset 3 e
+eval 
+            return {redis.call('sort',KEYS[1],'by','nosort','as... 1 zset
+del zset
+zadd zset -100 a
+zadd zset 200 b
+zadd zset -300 c
+zadd zset 1000000 d
+zadd zset +inf max
+zadd zset -inf min
+zrange zset 0 -1
+flushdb
+lpush mylist 1.1
+lpush mylist 5.10
+lpush mylist 3.10
+lpush mylist 7.44
+lpush mylist 2.1
+lpush mylist 5.75
+sort mylist
+flushdb
+sort foo{t} store bar{t}
+flushdb
+lpush foo{t} bar
+sort foo{t} alpha limit 10 10 store zap{t}
+exists zap{t}
+flushdb
+lpush foo{t} bar
+sort emptylist{t} store foo{t}
+exists foo{t}
+del myset mylist
+sadd myset a b c d e f g h i l m n o p q r s t u v z aa aaa azz
+sort myset alpha by _ store mylist
+lrange mylist 0 -1
+del myset
+sadd myset 1 2 3 4 not-a-double
+sort myset
+del myset
+sadd myset 1 2 3 4
+mset score:1 10 score:2 20 score:3 30 score:4 not-a-double
+sort myset by score:*
+del myset
+sadd myset a b c d e f g h i l m n o p q r s t u v z aa aaa azz
+sort myset by score:*
+del mylist
+lpush mylist a
+set x:a-> 100
+sort mylist by num get x:*->
+del testa
+lpush testa 2 1 4 3 5
+sort testa by nosort
+del testa
+lpush testa 2 1 4 3 5
+sort testa by nosort store testb
+lrange testb 0 -1
+sort testa by nosort limit 0 3 store testb
+lrange testb 0 -1
+del mylist
+lpush mylist a
+set x:a 100
+sort_ro mylist by nosort get x:*->
+sort_ro foolist STORE bar
+del tosort
+lpush tosort 0
+set weight_0 0.65041303618364643
+hset wobj_0 weight 0.65041303618364643
+lpush tosort 1
+set weight_1 348821
+hset wobj_1 weight 348821
+sort tosort BY weight_* LIMIT 0 10
+sort tosort BY weight_* LIMIT 0 10
+sort tosort BY weight_* LIMIT 0 10
+sort tosort BY weight_* LIMIT 0 10
+sort tosort BY weight_* LIMIT 0 10
+sort tosort BY weight_* LIMIT 0 10
+sort tosort BY nokey LIMIT 0 10
+lpush L 2 1 0
+sort_ro L by a limit 2 9223372036854775807
+sort_ro L by a limit 2 2147483647
+config get list-max-listpack-size
+config set list-max-listpack-size -1
+del lst{t} lst_dst{t}
+config set list-max-listpack-size -1
+config set list-compress-depth 12
+lpush lst{t} 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+sort lst{t} store lst_dst{t}
+object encoding lst_dst{t}
+debug object lst_dst{t}
+config set list-max-listpack-size 16
+PING
+cluster addslotsrange 0 16383
+cluster slots
+debug internal_secret
+CLUSTER MYID
+cluster slots
+debug internal_secret
+cluster info
+cluster info
+cluster info
+cluster info
+cluster info
+cluster info
+flushall
+lpush {a}mylist 1 2 3
+set {a}by1 20
+set {a}by2 30
+set {a}by3 0
+set {a}get1 200
+set {a}get2 100
+set {a}get3 30
+sort {a}mylist by by*
+sort {a}mylist by {a}by*
+sort {a}mylist by {a}by* get get*
+sort {a}mylist by {a}by* get {a}get*
+sort {a}mylist by {a}by* get #
+sort {a}mylist by {a}by* get {a}get* get #
+sort_ro {a}mylist by by*
+sort_ro {a}mylist by {a}by*
+sort_ro {a}mylist by {a}by* get get*
+sort_ro {a}mylist by {a}by* get {a}get*
+sort_ro {a}mylist by {a}by* get #
+sort_ro {a}mylist by {a}by* get {a}get* get #

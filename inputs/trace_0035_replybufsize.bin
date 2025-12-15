@@ -1,0 +1,25 @@
+PING
+select 9
+debug replybuffer peak-reset-time 100
+select 9
+client setname test_client
+client list
+client list
+client list
+client list
+client list
+client list
+set bigval xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+debug replybuffer peak-reset-time never
+get bigval
+client list
+get bigval
+client list
+get bigval
+client list
+get bigval
+client list
+get bigval
+client list
+client list
+debug replybuffer peak-reset-time reset

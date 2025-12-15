@@ -1,0 +1,1494 @@
+PING
+select 9
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+get x
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+set mykey myval
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 mykey
+set x 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+del hash
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+set mykey myval
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 mykey
+del mylist
+rpush mylist a
+rpush mylist b
+rpush mylist c
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 mylist
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 mykey
+set mykey myval
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 mykey
+del mykey
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 mykey
+set mykey this is DB 9
+select 10
+set mykey this is DB 10
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 mykey
+set mykey original value
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+get mykey
+select 9
+lpush l 1
+lpop l
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 l
+lpush l 1
+lpop l
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 l
+zadd empty_zset 10 foo
+zmpop 1 empty_zset MIN
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 empty_zset
+zadd empty_zset 10 foo
+zmpop 1 empty_zset MIN
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 empty_zset
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+config set appendonly no
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+del s
+xgroup create s g $ MKSTREAM
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 s
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 s
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 s
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 s
+XADD s * a 1
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 s
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 s
+XADD s * b 2
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 s
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+set foo bar
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 foo
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+set foo bar
+function load replace #!lua name=test
+redis.register_function{function_name='test', ca...
+fcall_ro test 1 foo
+set foo bar
+function load replace #!lua name=test
+redis.register_function{function_name='test', ca...
+fcall_ro test 1 foo
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+ping
+set foo 5
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 foo 2
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 foo 2
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 foo 2
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 foo 2
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 foo 2
+script flush
+set x 0
+select 9
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+info
+get x
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 mylist
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 foo
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 key
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test -12
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+HELLO 3
+hset hash field value
+hgetall hash
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 hash
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 hash
+HELLO 2
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 hash
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 hash
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+ping
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 l
+SET key value EX 10
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 key
+SET key value EX 10
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 key
+acl setuser bob on >123 +@scripting +set ~x*
+auth bob 123
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 xx
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 xx
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+PING
+select 9
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+PING
+select 9
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+PING
+select 9
+select 9
+config set lua-time-limit 10
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+ping
+function kill
+ping
+select 9
+config set lua-time-limit 10
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+ping
+ping
+function kill
+ping
+ping
+select 9
+config set lua-time-limit 10
+function load replace #!lua name=test
+redis.register_function('test', function() while...
+fcall test 0
+ping
+ping
+function kill
+ping
+ping
+ping
+config set lua-time-limit 10
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+ping
+flushall
+config set appendonly yes
+select 9
+select 9
+select 9
+blpop x 0
+info
+DEBUG set-disable-deny-scripts 1
+config set lua-time-limit 10
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+ping
+hello 2 setname abortscript
+DEBUG set-disable-deny-scripts 0
+select 9
+config set lua-time-limit 10
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+ping
+function kill
+ping
+ping
+shutdown nosave
+PING
+select 9
+PING
+select 9
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 x
+slaveof 127.0.0.1 21116
+PING
+info
+REPLCONF listening-port 21115
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21115
+PSYNC ? -1
+REPLCONF ACK 0
+info
+info replication
+select 9
+brpop a 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+SELECT 9
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 a
+MULTI
+lpush a 1
+lpush a 2
+EXEC
+RPOP a
+lrange a 0 -1
+lrange a 0 -1
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 3 foo1 x z
+MULTI
+set foo1 bar1
+SELECT 10
+incr x
+SELECT 11
+incr z
+EXEC
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+SELECT 9
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 3 foo1 x z
+MULTI
+set foo1 bar1
+SELECT 10
+incr x
+SELECT 11
+incr z
+EXEC
+debug digest
+debug digest
+REPLCONF GETACK *
+REPLCONF ACK 1450
+REPLCONF ACK 1487
+PING
+select 9
+PING
+select 9
+slaveof 127.0.0.1 21118
+PING
+info
+REPLCONF listening-port 21117
+PSYNC f04a5080a1a025654a1d80c801c295a5c27c2912 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21117
+PSYNC ? -1
+REPLCONF ACK 0
+info
+info replication
+eval 
+                redis.call('set','foo','bar');
+                ... 0
+SELECT 9
+set foo bar
+eval 
+                    redis.set_repl(redis.REPL_ALL);
+           ... 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+del a b c d
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 4 a b c d
+MULTI
+set a 1
+set d 4
+EXEC
+mget a b c d
+mget a b c d
+debug loadaof
+mget a b c d
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+set time 1765816892
+get time
+get time
+get time
+REPLCONF GETACK *
+REPLCONF ACK 1416
+REPLCONF ACK 1453
+PING
+select 9
+debug set-disable-deny-scripts 1
+hello 2
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+hello 2
+hello 3
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+hello 2
+hello 2
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+hello 2
+hello 3
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+hello 2
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 key
+EXISTS key
+DEBUG set-active-expire 0
+SET key value PX 1
+DEBUG OBJECT key
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 1 key
+EXISTS key
+DEBUG set-active-expire 1
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 0
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 8 key1{t} key2{t} key3{t} key4{t} key5{t} key6{t} key7{t} key8{t}
+function load replace #!lua name=test
+redis.register_function('test', function(KEYS, A...
+fcall test 3 key1{t} key2{t} key3{t}
+debug set-disable-deny-scripts 0
+PING
+select 9
+flushall
+script flush
+function flush
+info
+info
+multi
+FUNCTION FLUSH
+FUNCTION FLUSH
+FUNCTION FLUSH
+FUNCTION FLUSH
+FUNCTION FLUSH
+FUNCTION FLUSH
+FUNCTION FLUSH
+FUNCTION FLUSH
+exec
+info
+info
+function load #!lua name=test0
+redis.register_function('test0', function(KEYS,...
+function load #!lua name=test1
+redis.register_function('test1', function(KEYS,...
+function load #!lua name=test2
+redis.register_function('test2', function(KEYS,...
+function load #!lua name=test3
+redis.register_function('test3', function(KEYS,...
+function load #!lua name=test4
+redis.register_function('test4', function(KEYS,...
+function load #!lua name=test5
+redis.register_function('test5', function(KEYS,...
+function load #!lua name=test49998
+redis.register_function('test49998', functi...
+function load #!lua name=test49999
+redis.register_function('test49999', functi...
+info
+PING
+select 9
+config set maxmemory 1
+eval redis.call('set', 'x', 1) 0
+config set maxmemory 0
+eval return 'hello' 0
+eval return _G 0
+eval local a = {}; setmetatable(a,{__index=function() foo() end}) ret... 0
+eval local a = {}; setmetatable(a,{__index=function() redis.call('set... 1 x
+get x
+eval return 100.5 0
+eval return 'hello world' 0
+eval return true 0
+eval return false 0
+eval return {ok='fine'} 0
+eval return {err='ERR this is an error'} 0
+eval return {1,2,3,'ciao',{1,2}} 0
+eval return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]} 2 a{t} b{t} c{t} d{t}
+set mykey myval
+eval return redis.call('get',KEYS[1]) 1 mykey
+evalsha fd758d1589d044dd850a6f05d52f2eefd27f033f 1 mykey
+evalsha_ro fd758d1589d044dd850a6f05d52f2eefd27f033f 1 mykey
+evalsha FD758D1589D044DD850A6F05D52F2EEFD27F033F 1 mykey
+evalsha NotValidShaSUM 0
+evalsha ffd632c7d33e571e9f24556ebed26c3479a87130 0
+set x 0
+eval 
+            local foo = redis.pcall('incr',KEYS[1])
+           ... 1 x
+del hash
+eval 
+            local foo = redis.pcall('hincrby','hash','field',20... 0
+set mykey myval
+eval 
+            local foo = redis.pcall('get',KEYS[1])
+            ... 1 mykey
+del mylist
+rpush mylist a
+rpush mylist b
+rpush mylist c
+eval 
+            local foo = redis.pcall('lrange',KEYS[1],0,-1)
+    ... 1 mylist
+eval 
+            local foo = redis.pcall('set',KEYS[1],'myval')
+    ... 1 mykey
+set mykey myval
+eval 
+            local foo = redis.pcall('incr',KEYS[1])
+           ... 1 mykey
+del mykey
+eval 
+            local foo = redis.pcall('get',KEYS[1])
+            ... 1 mykey
+set mykey this is DB 9
+select 10
+set mykey this is DB 10
+eval return redis.pcall('get',KEYS[1]) 1 mykey
+set mykey original value
+eval return redis.pcall('select','9') 0
+get mykey
+select 9
+lpush l 1
+lpop l
+eval return redis.pcall('blpop','l',0) 1 l
+lpush l 1
+lpop l
+eval return redis.pcall('brpop','l',0) 1 l
+zadd empty_zset 10 foo
+zmpop 1 empty_zset MIN
+eval return redis.pcall('bzpopmin','empty_zset', 0) 1 empty_zset
+zadd empty_zset 10 foo
+zmpop 1 empty_zset MIN
+eval return redis.pcall('bzpopmax','empty_zset', 0) 1 empty_zset
+eval return redis.pcall('wait','1','0') 0
+config set appendonly no
+eval return redis.pcall('waitaof','0','1','0') 0
+del s
+xgroup create s g $ MKSTREAM
+eval return redis.pcall('xread','STREAMS','s','$') 1 s
+eval return redis.pcall('xread','BLOCK',0,'STREAMS','s','$') 1 s
+eval return redis.pcall('xreadgroup','group','g','c','STREAMS','s','>... 1 s
+eval return redis.pcall('xreadgroup','group','g','c','BLOCK',0,'STREA... 1 s
+XADD s * a 1
+eval return redis.pcall('xread','BLOCK',0,'STREAMS','s','$') 1 s
+eval return redis.pcall('xread','BLOCK',0,'STREAMS','s','0-0') 1 s
+XADD s * b 2
+eval return redis.pcall('xreadgroup','group','g','c','BLOCK',0,'STREA... 1 s
+eval redis.pcall('randomkey'); return redis.pcall('set','x','ciao') 1 x
+eval return redis.call() 0
+eval redis.call('nosuchcommand') 0
+eval redis.call('get','a','b','c') 0
+set foo bar
+eval redis.call('lpush',KEYS[1],'val') 1 foo
+eval  return {unpack({1,2,3}, -2, 2147483647)}  0
+eval  return {unpack({1,2,3}, 0, 2147483647)}  0
+eval  return {unpack({1,2,3}, -2147483648, -2)}  0
+eval  return {unpack({1,2,3}, -1, -2)}  0
+eval  return {unpack({1,2,3}, 1, -1)}  0
+eval assert(bit.tobit(1) == 1);
+                assert(bit.band(1) ==... 0
+eval return 'hello' --trailing comment 0
+set foo bar
+eval_ro return redis.call('get', KEYS[1]); 1 foo
+set foo bar
+eval_ro redis.call('del', KEYS[1]); 1 foo
+set mykey myval
+script load return redis.call('get',KEYS[1])
+evalsha fd758d1589d044dd850a6f05d52f2eefd27f033f 1 mykey
+script flush
+evalsha fd758d1589d044dd850a6f05d52f2eefd27f033f 1 mykey
+eval return redis.call('get',KEYS[1]) 1 mykey
+evalsha fd758d1589d044dd850a6f05d52f2eefd27f033f 1 mykey
+script flush
+evalsha fd758d1589d044dd850a6f05d52f2eefd27f033f 1 mykey
+script load return 0
+script load return 1
+script load return 2
+script load return 3
+script load return 4
+script load return 5
+script load return 99
+info Memory
+script flush async
+info Memory
+eval return 1+1 0
+script exists a27e7e8a43702b7046d4f6a7ccf5b60cef6b9bd9 a27e7e8a43702b7046d4f6a7ccf5b60cef6b9bda
+script load return 'loaded'
+evalsha b534286061d4b9e4026607613b95c06c06015ae8 0
+del myset
+sadd myset 1 2 3 4 10
+eval return redis.call('sort',KEYS[1],'desc') 1 myset
+del myset
+sadd myset a b c d e f g h i l m n o p q r s t u v z aa aaa azz
+eval return redis.call('sort',KEYS[1],'by','_') 1 myset
+eval return redis.sha1hex('') 0
+eval return redis.sha1hex('Pizza & Mandolino') 0
+eval 
+            local start = os.clock()
+            while os.clock... 0
+eval 
+            local allowed_methods = {"clock"}
+            -- Fi... 0
+eval os.execute() 0
+eval os.exit() 0
+eval a=10 0
+eval return bit.tohex(65535, -2147483648) 0
+ping
+set foo 5
+eval 
+            local current
+
+            current = redis.call('ge... 1 foo 2
+eval 
+            local current
+
+            current = redis.call('ge... 1 foo 2
+eval 
+            local current
+
+            current = redis.call('ge... 1 foo 2
+eval 
+            local current
+
+            current = redis.call('ge... 1 foo 2
+eval 
+            local current
+
+            current = redis.call('ge... 1 foo 2
+eval return tostring(math.random()) 0
+eval 
+            math.randomseed(ARGV[1]); return tostring(math.rand... 0 20
+script flush
+set x 0
+select 9
+eval return redis.call("incr",KEYS[1]) 1 x
+eval return redis.call("incr",KEYS[1]) 1 x
+eval return redis.call("incr",KEYS[1]) 1 x
+eval return redis.call("incr",KEYS[1]) 1 x
+eval return redis.call("incr",KEYS[1]) 1 x
+eval return redis.call("incr",KEYS[1]) 1 x
+eval return redis.call("incr",KEYS[1]) 1 x
+info
+get x
+config set repl-ping-replica-period 3600
+SYNC
+sadd myset ppp
+del myset
+sadd myset a b c
+eval return redis.call('spop', 'myset') 0
+eval return redis.call('spop', 'myset', 1) 0
+eval return redis.call('spop', KEYS[1]) 1 myset
+eval return redis.call('spop', KEYS[1]) 1 myset
+set trailingkey 1
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+mset a{t} 1 b{t} 2 c{t} 3 d{t} 4
+eval return redis.call('mget', 'a{t}', 'b{t}', 'c{t}', 'd{t}') 0
+set trailingkey 2
+config set repl-ping-replica-period 10
+config set repl-ping-replica-period 3600
+SYNC
+set expirekey 1
+eval return redis.call('expire', KEYS[1], ARGV[1]) 1 expirekey 3
+config set repl-ping-replica-period 10
+PING
+select 9
+config set repl-ping-replica-period 3600
+SYNC
+eval redis.call('hmget', KEYS[1], 1, 2, 3) 1 key
+eval redis.call('incrbyfloat', KEYS[1], 1) 1 key
+eval redis.call('set', KEYS[1], '1', 'KEEPTTL') 1 key
+config set repl-ping-replica-period 10
+eval 
+            local i
+            local x={}
+            redis.ca... 1 mylist
+eval 
+              local value = 9007199254740991
+              redi... 1 foo
+eval 
+            redis.call("set", "key", "12039611435714932082")
+  ... 1 key
+eval  return "hello"  -12
+eval redis.call('set','invalid') 0
+eval redis.call('incr') 0
+HELLO 3
+hset hash field value
+hgetall hash
+eval redis.setresp(3); return redis.call('hgetall', KEYS[1]) 1 hash
+eval redis.setresp(2); return redis.call('hgetall', KEYS[1]) 1 hash
+HELLO 2
+eval redis.setresp(3); return redis.call('hgetall', KEYS[1]) 1 hash
+eval redis.setresp(2); return redis.call('hgetall', KEYS[1]) 1 hash
+eval local a = {}; local b = {a}; a[1] = b; return a 0
+ping
+eval 
+            local a = {}
+            for i=1,7999 do
+          ... 1 l
+SET key value EX 10
+eval 
+             if redis.call("EXISTS", "key") then
+              ... 1 key
+SET key value EX 10
+eval 
+             redis.call("DEL", "key")
+             return redis... 1 key
+acl setuser bob on >123 +@scripting +set ~x*
+auth bob 123
+eval 
+            return redis.acl_check_cmd('set','xx',1)
+         1 xx
+eval 
+            return redis.acl_check_cmd('hset','xx','f',1)
+     ... 1 xx
+eval 
+            return redis.acl_check_cmd('set','yy',1)
+         0
+eval 
+            return redis.acl_check_cmd('invalid-cmd','arg')
+   ... 0
+eval 
+            return loadstring(string.dump(function() return 1 e... 0
+eval 
+                setmetatable(_G, {})
+             0
+eval 
+                print('some data')
+             0
+PING
+select 9
+eval 
+                local f = function() return 1 end
+             ... 0
+eval 
+                local f = function() return 1 end
+             ... 0
+eval 
+                getmetatable(newproxy(true)).__gc = function() ... 0
+PING
+select 9
+eval 
+                local f = function() return 1 end
+             ... 0
+eval 
+                local f = function() return 1 end
+             ... 0
+eval 
+                getmetatable(newproxy(true)).__gc = function() ... 0
+PING
+select 9
+select 9
+config set lua-time-limit 10
+eval while true do end 0
+ping
+script kill
+ping
+select 9
+config set lua-time-limit 10
+eval local f = function() while 1 do redis.call('ping') end end while... 0
+ping
+ping
+script kill
+ping
+ping
+select 9
+config set lua-time-limit 10
+eval while 1 do redis.call('ping') end 0
+ping
+ping
+script kill
+ping
+ping
+ping
+config set lua-time-limit 10
+eval for i=1,100000 do redis.call('ping') end return 'ok' 0
+ping
+flushall
+config set appendonly yes
+select 9
+select 9
+select 9
+blpop x 0
+info
+DEBUG set-disable-deny-scripts 1
+config set lua-time-limit 10
+eval 
+            local clients
+            redis.call('lpush',KEYS[1... 1 x
+ping
+hello 2 setname abortscript
+DEBUG set-disable-deny-scripts 0
+select 9
+config set lua-time-limit 10
+eval redis.call('set',KEYS[1],'y'); while true do end 1 x
+ping
+script kill
+ping
+ping
+shutdown nosave
+PING
+select 9
+PING
+select 9
+eval redis.call('incr',KEYS[1]); redis.call('nonexisting') 1 x
+eval return redis.call('incr',KEYS[1]) 1 x
+slaveof 127.0.0.1 21127
+$4
+
+REPLCONF listening-port 21126
+PSYNC 6e11397f729edadba5d4d15cde4cdd605d46284f 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21126
+PSYNC ? -1
+REPLCONF ACK 0
+info
+info replication
+evalsha 67164fc43fa971f76fd1aaeeaf60c1c178d25876 1 x
+SELECT 9
+incr x
+evalsha 6f5ade10a69975e903c6d07b10ea44c6382381a5 1 x
+incr x
+get x
+select 9
+brpop a 0
+eval 
+                    redis.call("lpush",KEYS[1],"1");
+          ... 1 a
+MULTI
+lpush a 1
+lpush a 2
+EXEC
+RPOP a
+lrange a 0 -1
+lrange a 0 -1
+del x
+del x
+eval if tonumber(ARGV[1]) > 0 then redis.call('incr', KEYS[1]) end 1 x 0
+evalsha 6e0e2745aa546d0b50b801a20983b70710aef3ce 1 x 0
+evalsha 6e0e2745aa546d0b50b801a20983b70710aef3ce 1 x 1
+incr x
+get x
+eval 
+                    redis.call("set","foo1","bar1")
+           ... 3 foo1 x z
+MULTI
+set foo1 bar1
+SELECT 10
+incr x
+SELECT 11
+incr z
+EXEC
+eval 
+                    redis.call("set","foo1","bar1")
+           ... 3 foo1 x z
+MULTI
+SELECT 9
+set foo1 bar1
+SELECT 10
+incr x
+SELECT 11
+incr z
+EXEC
+debug digest
+debug digest
+REPLCONF GETACK *
+REPLCONF ACK 541
+REPLCONF ACK 578
+PING
+select 9
+PING
+select 9
+slaveof 127.0.0.1 21129
+*1
+
+REPLCONF listening-port 21128
+PSYNC 88cc86a1121bb593a1d6973ada19988ea8ed34ad 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21128
+PSYNC ? -1
+REPLCONF ACK 0
+info
+info replication
+eval 
+                redis.call('set','foo','bar');
+                ... 0
+SELECT 9
+set foo bar
+eval 
+                    redis.set_repl(redis.REPL_ALL);
+           ... 0
+eval 
+                    redis.set_repl(12345);
+                 0
+del a b c d
+eval 
+                redis.call('set','a','1');
+                redi... 4 a b c d
+MULTI
+set a 1
+set d 4
+EXEC
+mget a b c d
+mget a b c d
+debug loadaof
+mget a b c d
+eval 
+                        redis.replicate_commands()
+            ... 0
+eval 
+                        redis.replicate_commands()
+            ... 0
+eval 
+                redis.call('set','time',redis.call('time')[1])
+... 0
+set time 1765816908
+get time
+get time
+get time
+REPLCONF GETACK *
+REPLCONF ACK 177
+REPLCONF ACK 214
+PING
+select 9
+script debug sync
+eval return 'hello' 0
+PING
+select 9
+script debug sync
+eval return 'hello' 0
+select 9
+ping
+PING
+select 9
+script flush
+config resetstat
+eval return 1 0
+eval return 2 0
+eval return 3 0
+eval return 4 0
+eval return 5 0
+eval return 6 0
+eval return 250 0
+eval_ro return 251 0
+eval_ro return 252 0
+eval_ro return 253 0
+eval_ro return 254 0
+eval_ro return 255 0
+eval_ro return 256 0
+eval_ro return 500 0
+info
+evalsha e0e1f9fabfc9d4800c877a703b823ac0578ff8db 0
+evalsha_ro e0e1f9fabfc9d4800c877a703b823ac0578ff8db 0
+evalsha 98fe65896b61b785c5ed328a5a0a1421f4f1490c 0
+evalsha_ro 98fe65896b61b785c5ed328a5a0a1421f4f1490c 0
+eval return 501 0
+eval return 502 0
+eval return 503 0
+eval return 504 0
+eval return 505 0
+eval return 506 0
+eval return 999 0
+eval return 1000 0
+evalsha e0e1f9fabfc9d4800c877a703b823ac0578ff8db 0
+evalsha_ro e0e1f9fabfc9d4800c877a703b823ac0578ff8db 0
+evalsha 98fe65896b61b785c5ed328a5a0a1421f4f1490c 0
+evalsha_ro 98fe65896b61b785c5ed328a5a0a1421f4f1490c 0
+info
+info
+script flush
+config resetstat
+eval return 1 0
+eval return 2 0
+eval return 3 0
+eval return 4 0
+eval return 5 0
+eval return 6 0
+evalsha 7f923f79fe76194c868d7e1d0820de36700eb649 0
+eval return 1000 0
+evalsha e0e1f9fabfc9d4800c877a703b823ac0578ff8db 0
+evalsha e0e1f9fabfc9d4800c877a703b823ac0578ff8db 0
+evalsha 09d3822de862f46d784e6a36848b4f0736dda47a 0
+evalsha 98fe65896b61b785c5ed328a5a0a1421f4f1490c 0
+evalsha 94f1a7bc9f985a1a1d5a826a85579137d9d840c8 0
+info
+info
+script flush
+config resetstat
+script load return 1
+eval return 'str_1' 0
+script load return 2
+eval return 'str_2' 0
+script load return 3
+eval return 'str_3' 0
+script load return 4
+eval return 'str_4' 0
+info
+info
+PING
+select 9
+debug set-disable-deny-scripts 1
+hello 2
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'bignum'... 0
+eval return {big_number='123\r\n123'} 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'map') 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'set') 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'double'... 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'null') 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'verbati... 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'true') 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'false') 0
+hello 2
+hello 3
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'bignum'... 0
+eval return {big_number='123\r\n123'} 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'map') 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'set') 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'double'... 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'null') 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'verbati... 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'true') 0
+eval redis.setresp(2);return redis.call('debug', 'protocol', 'false') 0
+hello 2
+eval redis.setresp(3);return redis.call('debug', 'protocol', 'attrib'... 0
+eval 
+            redis.call("SET", "key", "value", "PX", "1")
+      ... 1 key
+EXISTS key
+DEBUG set-active-expire 0
+SET key value PX 1
+DEBUG OBJECT key
+eval return redis.call('EXISTS', 'key') 1 key
+EXISTS key
+DEBUG set-active-expire 1
+eval 
+            local result1 = {redis.call("TIME")}
+            re... 0
+eval 
+            redis.call("SET", "key1{t}", "value", "EX", 1)
+    ... 8 key1{t} key2{t} key3{t} key4{t} key5{t} key6{t} key7{t} key8{t}
+eval 
+            redis.call("SET", "key1{t}", "value")
+            l... 3 key1{t} key2{t} key3{t}
+debug set-disable-deny-scripts 0
+PING
+select 9
+flushall
+script flush
+function flush
+info
+info
+multi
+SCRIPT FLUSH
+SCRIPT FLUSH
+SCRIPT FLUSH
+SCRIPT FLUSH
+SCRIPT FLUSH
+SCRIPT FLUSH
+SCRIPT FLUSH
+SCRIPT FLUSH
+exec
+info
+info
+script load --xxxxxxxxxx
+return 000000
+script load --xxxxxxxxxx
+return 000001
+script load --xxxxxxxxxx
+return 000002
+script load --xxxxxxxxxx
+return 000003
+script load --xxxxxxxxxx
+return 000004
+script load --xxxxxxxxxx
+return 000005
+script load --xxxxxxxxxx
+return 049998
+script load --xxxxxxxxxx
+return 049999
+info
+PING
+select 9
+eval #!not-lua
+                return 1
+             0
+eval #!lua
+            return 1
+         0
+eval #!lua badger=data
+                return 1
+             0
+eval #!lua flags=allow-oom,what?
+                return 1
+           ... 0
+set x 123
+config set maxmemory 1
+eval 
+                redis.call('set','x',1)
+                return ... 1 x
+eval 
+                return redis.call('get','x')
+             1 x
+eval #!lua flags=
+                return 1
+             0
+eval #!lua flags=allow-oom
+                redis.call('set','x',1)
+  ... 1 x
+eval #!lua flags=no-writes
+                redis.call('get','x')
+    ... 0
+eval_ro #!lua flags=no-writes
+                redis.call('get','x')
+    ... 1 x
+eval 
+                redis.call('get','x')
+                return 1
+... 1 x
+eval_ro 
+                redis.call('get','x')
+                return 1
+... 1 x
+config set maxmemory 0
+eval #!lua flags=no-writes
+                redis.call('set','x',1)
+  ... 1 x
+PING
+select 9
+set x some value
+replicaof 127.0.0.1 21135
+PING
+info
+REPLCONF listening-port 21136
+PSYNC fba0eec07fae435db62275464bbd9169ff0a96b3 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 6 listening-port 21136
+PSYNC ? -1
+REPLCONF ACK 0
+info
+info replication
+eval #!lua flags=no-writes
+                    return redis.call('get... 1 x
+eval #!lua
+                    return redis.call('get','x')
+         ... 1 x
+multi
+eval #!lua flags=no-writes
+                redis.call('get','x')
+    ... 1 x
+exec
+multi
+eval 
+                redis.call('get','x')
+                return 1
+... 1 x
+exec
+replicaof no one
+select 9
+select 9
+multi
+multi
+eval #!lua
+                return 1
+             0
+eval 
+                redis.call('set','x',1)
+                return ... 1 x
+replicaof 127.0.0.1 21135
+PING
+info
+REPLCONF listening-port 21136
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 577d533734e3810ae4e35a65e5c15b9054329574 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 8 listening-port 21136
+PSYNC ? -1
+REPLCONF ACK 0
+info
+exec
+exec
+set x some value
+config set min-replicas-to-write 1
+eval #!lua flags=no-writes
+                return redis.call('get','x... 1 x
+eval 
+                return redis.call('get','x')
+             1 x
+eval #!lua
+                return redis.call('get','x')
+             1 x
+eval 
+                return redis.call('set','x', 1)
+             1 x
+config set min-replicas-to-write 0
+set x pre-script value
+config set min-replicas-to-write 1
+config set lua-time-limit 10
+PING
+select 9
+slaveof 127.0.0.1 21135
+PING
+info replication
+REPLCONF listening-port 21137
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 5f87a92ba6d439cde86bb0bbfdbb82dd0d9a1c56 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 10 listening-port 21137
+PSYNC ? -1
+REPLCONF ACK 103
+info replication
+select 9
+eval 
+                redis.call('set','x',"script value")
+          ... 1 x
+ping
+ping
+slaveof no one
+get x
+config set min-replicas-to-write 0
+config set lua-time-limit 5000
+config set replica-serve-stale-data no
+replicaof 127.0.0.1 1
+eval 
+                return redis.call('get','x')
+             1 x
+eval #!lua flags=no-writes
+                return 1
+             0
+eval #!lua flags=allow-stale,no-writes
+                return 1
+     ... 0
+eval #!lua flags=allow-stale,no-writes
+                return redis.c... 1 x
+eval #!lua flags=allow-stale,no-writes
+                return redis.c... 0
+script load #!lua flags=allow-stale,no-writes
+                return redis.c...
+evalsha c2a809c12ea4b65bccbfeac0f2dce10ea5a74b32 0
+replicaof no one
+config set replica-serve-stale-data yes
+config set maxmemory 1
+eval #!lua
+                return 1
+             0
+eval #!lua
+                return 1
+             0
+eval #!lua
+                return 1
+             0
+eval #!lua
+                return 1
+             0
+eval #!lua
+                return 1
+             0
+eval #!lua
+                return 1
+             0
+eval #!lua
+                return 1
+             0
+eval #!lua
+                return 1
+             0
+config set maxmemory 0
+eval #!lua
+            return 1
+         0
+PING
+select 9
+config resetstat
+config set maxmemory 1
+eval return redis.call('set','x','y') 1 x
+info errorstats
+info
+info commandstats
+info commandstats
+config resetstat
+eval 
+                local t = redis.pcall('set','x','y')
+          ... 1 x
+info errorstats
+info errorstats
+info
+info commandstats
+info commandstats
+config resetstat
+eval  return redis.pcall('set','x','y')  1 x
+info errorstats
+info errorstats
+info
+info commandstats
+info commandstats
+config set maxmemory 0
+config resetstat
+eval return redis.call('select',99) 0
+info errorstats
+info
+info commandstats
+info commandstats
+config resetstat
+eval 
+                local t = redis.pcall('select',99)
+            ... 0
+info errorstats
+info
+info commandstats
+info commandstats
+config resetstat
+eval_ro return redis.call('set','x','y') 1 x
+info errorstats
+info
+info commandstats
+info commandstats
+config resetstat
+eval_ro 
+                local t = redis.pcall('set','x','y')
+          ... 1 x
+info errorstats
+info
+info commandstats
+info commandstats
+config resetstat
+set Sicily 1
+eval return redis.call('GEOADD', 'Sicily', '13.361389', '38.115556', ... 1 x
+info errorstats
+info
+info commandstats
+info commandstats
+config resetstat
+eval return redis.error_reply("MY_ERR_CODE custom msg") 0
+info errorstats
+config resetstat
+eval return redis.error_reply("") 0
+info errorstats
+eval local status, res = pcall(function() return 1 end); return 'stat... 0
+eval local status, res = pcall(function() return foo end); return 'st... 0
+eval 
+                local x={}
+                return redis.call("p... 0
+eval 
+                return redis.call("ping", "asdf")
+             0
+info
+set foo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+memory usage foo
+eval 
+                return redis.call("SETNX", "foo", string.rep("a... 0
+eval 
+                return redis.call("SET", "foo", string.rep("a",... 0
+memory usage foo
+eval error('simple string error') 0
+eval error({err='ERR table error'}) 0
+eval error({}) 0

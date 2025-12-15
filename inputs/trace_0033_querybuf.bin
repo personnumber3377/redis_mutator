@@ -1,0 +1,46 @@
+PING
+select 9
+config set hz 100
+select 9
+client setname test_client
+client list
+debug pause-cron 1
+client list
+set aa b
+client list
+debug pause-cron 0
+client list
+client list
+client list
+client list
+client list
+client list
+debug pause-cron 1
+select 9
+client setname test_client
+set x AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA...
+client list
+debug pause-cron 0
+set x AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA...
+client list
+set x AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA...
+client list
+client list
+client list
+select 9
+client setname test_client
+debug pause-cron 1
+client list
+debug pause-cron 0
+client list
+client list
+client list
+client list
+client list
+client list
+PING
+select 9
+select 9
+client setname test_client
+client list
+config get io-threads

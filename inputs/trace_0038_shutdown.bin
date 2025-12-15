@@ -1,0 +1,64 @@
+PING
+select 9
+set 0 0
+set 1 1
+set 2 2
+set 3 3
+set 4 4
+set 5 5
+set 18 18
+set 19 19
+config set rdb-key-save-delay 10000000
+bgsave
+info
+config get dir
+config get dir
+shutdown nosave
+PING
+select 9
+debug pause-cron 1
+info
+shutdown abort
+debug pause-cron 0
+ping
+set 0 0
+set 1 1
+set 2 2
+set 3 3
+set 4 4
+set 5 5
+set 18 18
+set 19 19
+config set rdb-key-save-delay 100000
+info
+config get dir
+PING
+select 9
+info
+config get dir
+set 0 0
+set 1 1
+set 2 2
+set 3 3
+set 4 4
+set 5 5
+set 18 18
+set 19 19
+shutdown
+ping
+shutdown nosave
+PING
+select 9
+config set shutdown-on-sigterm default
+config set rdb-key-save-delay 10000000
+set 0 0
+set 1 1
+set 2 2
+set 3 3
+set 4 4
+set 5 5
+set 9 9
+config set appendonly yes
+info
+info
+config set shutdown-on-sigterm force

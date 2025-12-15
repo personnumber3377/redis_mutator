@@ -1,0 +1,203 @@
+PING
+select 9
+client PAUSE 100000 WRITE
+select 9
+GET FOO
+PING
+INFO
+info
+client unpause
+select 9
+SET FOO BAR
+client PAUSE 200 ALL
+client PAUSE 20 WRITE
+get FOO
+client PAUSE 60000 WRITE
+client PAUSE 10 WRITE
+select 9
+SET FOO BAR
+info
+client unpause
+client PAUSE 60000 WRITE
+select 9
+SET FOO BAR
+info
+client unpause
+PFADD pause-hll test
+client PAUSE 100000 WRITE
+select 9
+PFCOUNT pause-hll
+info
+select 9
+publish foo bar
+info
+client unpause
+SET FOO BAR
+client PAUSE 100000 WRITE
+select 9
+MULTI
+PING
+GET FOO
+EXEC
+info
+client unpause
+select 9
+MULTI
+SET FOO BAR
+client PAUSE 60000 WRITE
+EXEC
+info
+client unpause
+client PAUSE 60000 WRITE
+select 9
+select 9
+EVAL return 1 0
+EVAL #!lua
+            return 1
+         0
+info
+client unpause
+set x y
+FUNCTION load replace #!lua name=f1
+            redis.register_function{
+             ...
+client PAUSE 6000000 WRITE
+select 9
+EVAL #!lua flags=no-writes
+                return 'unique script'
+   ... 0
+EVAL #!lua flags=no-writes
+                return 'unique script'
+   ... 0
+EVAL_RO 
+            return redis.call('GeT', 'x')..' unique script'
+   ... 1 x
+script load #!lua flags=no-writes
+                return 2
+            
+EVALSHA dafd3b5158c733684726bd128f19fe3ad3bcf244 0
+fcall f1 0
+client unpause
+SET FOO BAR
+client PAUSE 100000 WRITE
+select 9
+MULTI
+EVAL #!lua flags=no-writes
+                return 12
+             0
+EVAL #!lua flags=no-writes
+                return 13
+             0
+EXEC
+info
+client unpause
+select 9
+select 9
+MULTI
+EVAL #!lua
+                return 12
+             0
+MULTI
+EVAL #!lua
+                return 13
+             0
+client PAUSE 60000 WRITE
+EXEC
+EXEC
+info
+client unpause
+EVAL_RO return redis.call('publish','ch','msg') 0
+EVAL #!lua flags=no-writes
+                return redis.call('publish... 0
+EVAL return redis.call('publish','ch','msg') 0
+client PAUSE 60000 WRITE
+select 9
+select 9
+select 9
+SET FOO BAR
+SET FOO BAR
+SET FOO BAR
+info
+client unpause
+client PAUSE 100000 WRITE
+set FOO
+client unpause
+info
+multi
+set foo{t} bar{t} PX 10
+set bar{t} foo{t} PX 10
+client PAUSE 50000 WRITE
+exec
+get foo{t}
+get foo{t}
+get bar{t}
+info
+client unpause
+get foo{t}
+get bar{t}
+info
+MULTI
+SET FOO1{t} BAR
+client PAUSE 60000 WRITE
+SET FOO2{t} BAR
+exec
+select 9
+SET FOO3{t} BAR
+info
+GET FOO1{t}
+GET FOO2{t}
+GET FOO3{t}
+client unpause
+PING
+select 9
+config set repl-ping-replica-period 3600
+replicaof 127.0.0.1 21111
+PING
+info
+REPLCONF listening-port 21112
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC bc91b9dfd851368401e91ca5bc1fbacf060b5d9a 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 24 listening-port 21112
+PSYNC ? -1
+REPLCONF ACK 0
+info
+set foo bar
+SELECT 9
+set foo bar
+info
+info
+info
+client pause 100000 write
+set foo2 bar2
+set foo2 bar2
+info
+info
+info
+get foo2
+client unpause
+info
+info
+get foo2
+flushall
+multi
+set key value px 3
+client pause 10000 write
+exec
+randomkey
+client unpause
+randomkey
+select 9
+select 9
+client id
+client id
+del mylist
+client pause 100000 write
+blpop mylist 0
+blpop mylist 0
+info
+client unblock 26 timeout
+client unblock 27 error
+client unpause
+client unblock 26 timeout
+client unblock 27 error
+client unpause
