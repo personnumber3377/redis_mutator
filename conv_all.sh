@@ -4,7 +4,7 @@ set -euo pipefail
 # -------- CONFIG --------
 INPUT_DIR="$HOME/redis_traces"
 OUTPUT_DIR="./inputs"
-CONVERTER="./.py"
+CONVERTER="./conv.py"
 EXT_IN=".resp"
 EXT_OUT=".bin"
 # ------------------------
