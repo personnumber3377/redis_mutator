@@ -1,0 +1,550 @@
+PING
+select 9
+ACL WHOAMI
+ACL setuser newuser
+ACL USERS
+ACL setuser a a
+ACL setuser newuser >passwd1
+AUTH newuser passwd1
+ACL setuser newuser on +acl
+AUTH newuser passwd1
+ACL WHOAMI
+ACL setuser newuser >passwd2
+AUTH newuser passwd1
+AUTH newuser passwd2
+AUTH newuser passwd3
+ACL setuser newuser <passwd1
+AUTH newuser passwd1
+ACL setuser newuser #34344e4d60c2b6d639b7bd22e18f2b0b91bc34bf0ac5f9952744435093cfb4e...
+AUTH newuser passwd4
+ACL setuser newuser #34344e4d60c2b6d639b7bd22e18f2b0b91bc34bf0ac5f9952744435093cfb4e
+ACL setuser newuser #34344e4d60c2b6d639b7bd22e18f2b0b91bc34bf0ac5f9952744435093cfb4e...
+ACL getuser newuser
+ACL setuser newuser !34344e4d60c2b6d639b7bd22e18f2b0b91bc34bf0ac5f9952744435093cfb4e...
+ACL getuser newuser
+SET foo bar
+ACL setuser newuser +set
+SET foo bar
+ACL setuser newuser allcommands ~foo:* ~bar:*
+SET foo:1 a
+SET bar:2 b
+SET zap:3 c
+ACL setuser newuser allkeys
+AUTH default pwd
+PUBLISH foo bar
+ACL setuser psuser on >pspass +acl +client +@pubsub
+AUTH psuser pspass
+PUBLISH foo bar
+AUTH default pwd
+SPUBLISH foo bar
+AUTH psuser pspass
+SPUBLISH foo bar
+select 9
+AUTH default pwd
+SUBSCRIBE foo
+UNSUBSCRIBE
+AUTH psuser pspass
+SUBSCRIBE foo
+select 9
+AUTH default pwd
+SSUBSCRIBE foo
+SUNSUBSCRIBE
+AUTH psuser pspass
+SSUBSCRIBE foo
+select 9
+AUTH default pwd
+PSUBSCRIBE bar*
+PUNSUBSCRIBE
+AUTH psuser pspass
+PSUBSCRIBE bar*
+ACL setuser psuser resetchannels &foo:1 &bar:*
+PUBLISH foo:1 somemessage
+PUBLISH bar:2 anothermessage
+PUBLISH zap:3 nosuchmessage
+ACL setuser psuser resetchannels &foo:1 &bar:*
+SPUBLISH foo:1 somemessage
+SPUBLISH bar:2 anothermessage
+SPUBLISH zap:3 nosuchmessage
+ACL setuser hpuser on nopass resetchannels &foo +@all
+ACL LIST
+AUTH hpuser pass
+PUBLISH foo bar
+PUBLISH bar game
+AUTH psuser pspass
+ACL deluser hpuser
+ACL setuser psuser +multi +discard
+MULTI
+PUBLISH notexits helloworld
+DISCARD
+MULTI
+SUBSCRIBE notexits foo:1
+DISCARD
+MULTI
+PSUBSCRIBE notexits:* bar:*
+DISCARD
+select 9
+AUTH psuser pspass
+SUBSCRIBE foo:1
+SUBSCRIBE bar:2
+SUBSCRIBE zap:3
+select 9
+AUTH psuser pspass
+SSUBSCRIBE foo:1
+SSUBSCRIBE bar:2
+SSUBSCRIBE zap:3
+select 9
+AUTH psuser pspass
+PSUBSCRIBE foo:1
+PSUBSCRIBE bar:*
+PSUBSCRIBE bar:baz
+select 9
+ACL setuser psuser resetchannels &foo:1
+HELLO 3 AUTH psuser pspass
+CLIENT SETNAME deathrow
+SUBSCRIBE foo:1
+ACL setuser psuser resetchannels
+CLIENT LIST
+select 9
+ACL setuser psuser resetchannels &foo:1
+AUTH psuser pspass
+CLIENT SETNAME deathrow
+SUBSCRIBE foo:1
+ACL setuser psuser resetchannels
+CLIENT LIST
+select 9
+ACL setuser psuser resetchannels &foo:1
+AUTH psuser pspass
+CLIENT SETNAME deathrow
+SSUBSCRIBE foo:1
+ACL setuser psuser resetchannels
+CLIENT LIST
+select 9
+ACL setuser psuser resetchannels &bar:*
+AUTH psuser pspass
+CLIENT SETNAME deathrow
+PSUBSCRIBE bar:*
+ACL setuser psuser resetchannels
+CLIENT LIST
+select 9
+ACL setuser psuser allchannels
+AUTH psuser pspass
+CLIENT SETNAME deathrow
+PSUBSCRIBE foo
+ACL setuser psuser resetchannels
+CLIENT LIST
+select 9
+ACL setuser psuser resetchannels &foo:1 &bar:* &orders
+AUTH psuser pspass
+CLIENT SETNAME pardoned
+SUBSCRIBE foo:1
+SSUBSCRIBE orders
+PSUBSCRIBE bar:*
+ACL setuser psuser resetchannels &foo:1 &bar:* &orders &baz:qaz &zoo:*
+CLIENT LIST
+ACL setuser psuser allchannels
+CLIENT LIST
+auth default 
+config resetstat
+select 9
+ACL setuser psuser reset on nopass +@all allkeys
+AUTH psuser pspass
+BLPOP list1 0
+info
+ACL setuser psuser resetkeys
+LPUSH list1 foo
+ping
+info commandstats
+ACL setuser newuser nopass
+AUTH newuser zipzapblabla
+ACL setuser newuser -ping
+INCR mycounter
+PING
+ACL setuser newuser -@all +@set +acl
+SADD myset a b c
+ACL setuser newuser +@all -@string
+SADD myset a b c
+SET foo bar
+ACL setuser newuser allcommands
+ACL setuser newuser +@all -client
+ACL setuser newuser +client|id +client|setname
+ACL getuser newuser
+CLIENT ID
+CLIENT SETNAME foo
+CLIENT KILL type master
+ACL setuser newuser +@all -client|kill
+ACL getuser newuser
+CLIENT ID
+CLIENT SETNAME foo
+CLIENT KILL type master
+ACL setuser newuser -@all +acl +config -config|set
+ACL getuser newuser
+CONFIG GET loglevel
+CONFIG SET loglevel debug
+ACL setuser newuser +@all -config|get
+ACL setuser newuser +config|get|appendonly
+ACL setuser newuser +@all +config|get
+ACL setuser newuser +@all +config|asdf
+ACL setuser newuser +@all -config|asdf
+ACL setuser newuser +@all +config|get
+DEL key
+XADD key * field value
+XINFO STREAM key
+ACL setuser newuser -@all +acl +select|0
+ACL getuser newuser
+SELECT 0
+SELECT 1
+ACL setuser newuser -@all +acl +del +incr +debug|object
+DEL key
+ACL getuser newuser
+INCR key
+DEBUG OBJECT key
+DEBUG SEGFAULT
+ACL setuser bob +memory|doctor
+ACL getuser bob
+ACL setuser bob +memory
+ACL getuser bob
+ACL setuser bob +@all +client|id
+ACL getuser bob
+ACL setuser bob >passwd1 on
+AUTH bob passwd1
+CLIENT ID
+MEMORY DOCTOR
+ACL setuser alice +@all -memory|doctor
+ACL getuser alice
+ACL setuser alice >passwd1 on
+AUTH alice passwd1
+MEMORY DOCTOR
+MEMORY STATS
+ACL setuser alice +@all -memory
+ACL getuser alice
+MEMORY DOCTOR
+MEMORY STATS
+ACL setuser alice -@all
+AUTH newuser passwd1
+ACL getuser alice
+AUTH alice passwd1
+GET key
+MEMORY STATS
+AUTH newuser passwd1
+ACL DELUSER example
+ACL SETUSER example
+ACL LIST
+ACL SETUSER example reset
+ACL LIST
+ACL setuser newuser reset +@all ~* -@string +incr -debug +debug|digest
+AUTH default 
+ACL setuser newuser reset -debug +debug|a +debug|b +debug|c
+ACL setuser newuser -debug
+ACL LOG RESET
+ACL setuser user1 >foo
+AUTH user1 doo
+ACL LOG
+ACL LOG
+ACL LOG
+AUTH user1 doo
+AUTH user1 doo
+AUTH user1 doo
+AUTH user1 doo
+AUTH user1 doo
+AUTH user1 doo
+AUTH user1 doo
+ACL LOG
+ACL LOG
+ACL LOG
+ACL setuser user2 >doo
+AUTH user2 foo
+ACL LOG
+ACL LOG RESET
+ACL setuser antirez >foo on +set ~object:1234
+ACL setuser antirez +eval +multi +exec
+ACL setuser antirez resetchannels +publish
+AUTH antirez foo
+GET foo
+AUTH default 
+ACL LOG
+ACL LOG RESET
+ACL DELUSER demo
+ACL SETUSER demo on nopass
+AUTH demo 
+SCRIPT HELP
+AUTH default 
+ACL LOG
+ACL LOG RESET
+AUTH antirez foo
+GET foo
+GET foo
+GET foo
+AUTH default 
+ACL LOG
+AUTH antirez foo
+SET somekeynotallowed 1234
+AUTH default 
+ACL LOG
+AUTH antirez foo
+PUBLISH somechannelnotallowed nullmsg
+AUTH default 
+ACL LOG
+ACL LOG RESET
+ACL LOG
+AUTH antirez foo
+MULTI
+INCR foo
+EXEC
+AUTH default 
+ACL LOG
+select 9
+ACL SETUSER antirez +incr
+AUTH antirez foo
+MULTI
+INCR object:1234
+ACL SETUSER antirez -incr
+EXEC
+AUTH default 
+ACL LOG
+ACL SETUSER antirez -incr
+AUTH antirez foo
+EVAL redis.call('incr','foo') 0
+AUTH default 
+ACL LOG
+AUTH antirez foo
+INCR foo
+INCR foo
+INCR foo
+INCR foo
+AUTH default 
+ACL LOG
+ACL LOG 2
+AUTH antirez wrong-password
+ACL LOG
+ACL LOG RESET
+CONFIG SET acllog-max-len 0
+SET obj:0 123
+SET obj:1 123
+SET obj:2 123
+SET obj:3 123
+SET obj:4 123
+SET obj:5 123
+SET obj:9 123
+AUTH default 
+ACL LOG
+ACL LOG RESET
+CONFIG SET acllog-max-len 5
+AUTH antirez foo
+SET obj:0 123
+SET obj:1 123
+SET obj:2 123
+SET obj:3 123
+SET obj:4 123
+SET obj:5 123
+SET obj:9 123
+AUTH default 
+ACL LOG
+CONFIG SET acllog-max-len 0
+ACL LOG
+ACL setuser default off
+select 9
+ACL setuser default on
+ACL setuser secure-user >supass on +@all
+ACL setuser default -@all
+HELLO 2 AUTH secure-user supass
+ACL setuser default nopass +@all
+AUTH default 
+ACL setuser secure-user1 >supass on +@all
+ACL setuser secure-user2 >supass on +@all
+HELLO 2 AUTH secure-user pass AUTH secure-user2 supass AUTH secure-user1 supass
+ACL whoami
+HELLO 2 AUTH secure-user supass AUTH secure-user2 supass AUTH secure-user pass
+ACL whoami
+HELLO 2 setname client1 setname client2 setname client3 setname client4
+client getname
+HELLO 2 setname client5 setname client6 setname client name
+client getname
+client setname client0
+HELLO 2 AUTH user pass setname client1
+client getname
+ACL help xxx
+ACL setuser not_used on >passwd
+ACL deluser not_used
+ping
+ACL setuser using on +acl >passwd
+AUTH using passwd
+ACL deluser using
+ACL genpass -236
+ACL genpass 5000
+ACL deluser default
+ACL load
+info
+info
+info
+info
+AUTH notrealuser 1233456
+info
+HELLO 3 AUTH notrealuser 1233456
+info
+HELLO 2 AUTH notrealuser 1233456
+info
+info
+info
+info
+info
+info
+info
+info
+ACL setuser invalidcmduser on >passwd nocommands
+AUTH invalidcmduser passwd
+acl list
+AUTH default 
+info
+info
+info
+info
+info
+info
+info
+info
+ACL setuser invalidkeyuser on >passwd resetkeys allcommands
+AUTH invalidkeyuser passwd
+get x
+AUTH default 
+info
+info
+info
+info
+info
+info
+info
+info
+ACL setuser invalidchanneluser on >passwd resetchannels allcommands
+AUTH invalidkeyuser passwd
+subscribe x
+AUTH default 
+info
+info
+info
+info
+PING
+select 9
+SUBSCRIBE foo
+PSUBSCRIBE bar*
+UNSUBSCRIBE
+PUNSUBSCRIBE
+PUBLISH hello world
+ACL setuser default reset on nopass ~* +@all
+SUBSCRIBE foo
+PSUBSCRIBE bar*
+UNSUBSCRIBE
+PUNSUBSCRIBE
+PUBLISH hello world
+CONFIG SET acl-pubsub-default resetchannels
+ACL setuser default reset on nopass ~* +@all
+SUBSCRIBE foo
+PSUBSCRIBE bar*
+PUBLISH hello world
+CONFIG SET acl-pubsub-default resetchannels
+AUTH alice alice
+acl whoami
+SET key value
+AUTH bob bob
+acl whoami
+sadd set 1 2 3
+SET key value
+select 9
+ACL SETUSER doug on nopass resetchannels &test* +@all ~*
+select 9
+select 9
+AUTH alice alice
+SUBSCRIBE test1
+AUTH doug doug
+SUBSCRIBE test1
+ACL LOAD
+PUBLISH test1 test-message
+select 9
+ACL SETUSER doug on nopass resetchannels &test* +@all ~*
+select 9
+HELLO 3 AUTH doug doug
+SUBSCRIBE test1
+ACL LOAD
+select 9
+ACL SETUSER mortimer on >mortimer ~* &* +@all
+select 9
+select 9
+AUTH alice alice
+SUBSCRIBE test
+AUTH mortimer mortimer
+SUBSCRIBE test
+ACL LOAD
+PUBLISH test test-message
+ACL setuser eve +get allkeys >eve on
+ACL save
+ACL load
+AUTH alice alice
+SET key value
+AUTH eve eve
+GET key
+SET key value
+AUTH alice alice
+ACL setuser harry on nopass resetchannels &test +@all ~*
+ACL save
+ACL load
+AUTH harry anything
+publish test bar
+publish test1 bar
+ACL deluser harry
+PING
+select 9
+slaveof 127.0.0.1 21612
+PING
+info
+REPLCONF listening-port 21613
+REPLCONF capa eof capa psync2 capa rdb-channel-repl
+PSYNC 1bdaba3db79c62695ae22211947c26caa816b4b4 1
+REPLCONF capa eof rdb-only 1 rdb-channel 1 main-ch-client-id 14 listening-port 21613
+PSYNC ? -1
+REPLCONF ACK 0
+info
+ACL LOAD
+PING
+select 9
+ACL getuser default
+ACL getuser alice
+ACL getuser default
+CONFIG set acl-pubsub-default allchannels
+ACL setuser mydefault
+ACL getuser mydefault
+CONFIG set acl-pubsub-default resetchannels
+ACL getuser mydefault
+ACL setuser onechannel &test
+ACL getuser onechannel
+ACL deluser onechannel
+CONFIG set acl-pubsub-default allchannels
+ACL setuser onechannel &test
+CONFIG set acl-pubsub-default resetchannels
+PING
+select 9
+ACL getuser default
+ACL getuser alice
+PING
+select 9
+SUBSCRIBE foo
+PING
+select 9
+SUBSCRIBE foo
+PSUBSCRIBE bar*
+UNSUBSCRIBE
+PUNSUBSCRIBE
+PUBLISH hello world
+PING
+select 9
+ACL LOAD
+ACL GETUSER alice
+ACL GETUSER alice
+ACL GETUSER bob
+ACL GETUSER default
+ACL LOAD
+ACL GETUSER default
+PING
+select 9
+flushdb
+config rewrite
+select 9
+flushdb

@@ -1,0 +1,153 @@
+PING
+select 9
+select 9
+ACL SETUSER selector-1 on -@all resetkeys nopass
+auth selector-1 password
+ping
+set write::foo bar
+get read::foo
+ACL SETUSER selector-1 (+@write ~write::*) (+@read ~read::*)
+ping
+set write::foo bar
+get read::foo
+get write::foo
+set read::foo bar
+ACL SETUSER selector-default reset ()
+ACL GETUSER selector-default
+ACL SETUSER selector-del on (~added-selector)
+ACL GETUSER selector-del
+ACL SETUSER selector-del clearselectors
+ACL GETUSER selector-del
+ACL SETUSER key-permission-R on nopass %R~read* +@all
+auth key-permission-R password
+PING
+set readstr bar
+get readstr
+set readstr bar
+get notread
+ACL SETUSER key-permission-W on nopass %W~write* +@all
+auth key-permission-W password
+PING
+LPUSH writelist 10
+GET writestr
+LPUSH notwrite 10
+ACL SETUSER key-permission-RW on nopass %R~read* %W~write* +@all
+auth key-permission-RW password
+PING
+set read bar
+copy read write
+copy write read
+ACL SETUSER key-permission-RW %~
+ACL SETUSER key-permission-RW %
+ACL SETUSER key-permission-RW on nopass %RW~ +@all
+auth key-permission-RW password
+SET x 5
+ACL SETUSER key-permission-RW on nopass %RW +@all
+auth key-permission-RW password
+SET x 5
+ACL SETUSER key-permission-RW-selector on nopass (%R~read* +@all) (%W~write* +@all)
+auth key-permission-RW-selector password
+PING
+LPUSH writelist 10
+GET writestr
+LPUSH notwrite 10
+set readstr bar
+get readstr
+set readstr bar
+get notread
+copy read write
+copy write read
+del readstr
+ACL SETUSER set-key-permission-R on nopass %R~read* +@all
+auth set-key-permission-R password
+PING
+get readstr
+set readstr bar
+set readstr bar get
+set readstr bar ex 100
+set readstr bar keepttl nx
+del writestr
+ACL SETUSER set-key-permission-W on nopass %W~write* +@all
+auth set-key-permission-W password
+PING
+set writestr bar
+set writestr get
+set get writestr
+set writestr bar get
+set writestr bar get ex 100
+set writestr bar get keepttl nx
+set writestr bar ex get
+del readwrite_str
+ACL SETUSER set-key-permission-RW-selector on nopass %RW~readwrite* +@all
+auth set-key-permission-RW-selector password
+PING
+get readwrite_str
+set readwrite_str bar ex get
+set readwrite_str bar
+get readwrite_str
+set readwrite_str bar2 get
+get readwrite_str
+set readwrite_str bar3 get ex 10
+get readwrite_str
+ttl readwrite_str
+del readstr
+ACL SETUSER bitfield-key-permission-R on nopass %R~read* +@all
+auth bitfield-key-permission-R password
+PING
+bitfield readstr get u4 0
+bitfield readstr set u4 0 1
+bitfield readstr get u4 0 set u4 0 1
+bitfield readstr incrby u4 0 1
+del writestr
+ACL SETUSER bitfield-key-permission-W on nopass %W~write* +@all
+auth bitfield-key-permission-W password
+PING
+bitfield writestr get u4 0
+bitfield writestr set u4 0 1
+bitfield writestr incrby u4 0 1
+del readwrite_str
+ACL SETUSER bitfield-key-permission-RW-selector on nopass %RW~readwrite* +@all
+auth bitfield-key-permission-RW-selector password
+PING
+bitfield readwrite_str get u4 0
+bitfield readwrite_str set u4 0 1
+bitfield readwrite_str incrby u4 0 1
+bitfield readwrite_str get u4 0
+ACL SETUSER acl-log-test-selector on nopass
+ACL SETUSER acl-log-test-selector +mget ~key (+mget ~key ~otherkey)
+auth acl-log-test-selector password
+ACL LOG RESET
+GET key
+ACL LOG
+ACL LOG RESET
+MGET otherkey someotherkey
+ACL LOG
+ACL LOG RESET
+MGET key otherkey someotherkey
+ACL LOG
+ACL setuser selector-info -@all +get resetchannels &channel1 %R~foo1 %W~bar1 ~baz1
+ACL setuser selector-info (-@all +set resetchannels &channel2 %R~foo2 %W~bar2 ~baz2)
+ACL GETUSER selector-info
+ACL SETUSER user-idempotency off -@all +get resetchannels &channel1 %R~foo1 %W~bar1 ~baz1 (-@all +set resetchannels &channel2 %R~foo2 %W~bar2 ~baz2)
+ACL LIST
+set v1 1
+lpush mylist 1
+ACL setuser test-sort-acl on nopass (+sort ~mylist)
+auth test-sort-acl nopass
+sort mylist by v*
+sort mylist get v*
+ACL setuser test-sort-acl (+sort ~mylist ~v*)
+sort mylist by v*
+sort mylist get v*
+ACL setuser test-sort-acl (+sort ~mylist %W~*)
+sort mylist by v*
+ACL deluser test-sort-acl
+del v1 mylist
+ACL setuser test-dry-run +@all ~v*
+ACL DRYRUN test-dry-run SET v v
+ACL DRYRUN test-dry-run SET v
+ACL DRYRUN test-dry-run SET
+PING
+select 9
+ACL getuser alice
+ACL getuser bob

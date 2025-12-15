@@ -15,22 +15,44 @@ MAX_ARG_LEN = 64
 def parse_resp(data: bytes):
     i = 0
     n = len(data)
+
     while i < n:
-        assert data[i:i+1] == b'*'
+        # Skip whitespace and newlines
+        if data[i:i+1] in b"\r\n ":
+            i += 1
+            continue
+
+        # Skip inline commands (e.g. "PING\r\n")
+        if data[i:i+1] != b'*':
+            end = data.find(b'\r\n', i)
+            if end == -1:
+                break
+            i = end + 2
+            continue
+
+        # RESP array
         i += 1
         end = data.index(b'\r\n', i)
         argc = int(data[i:end])
         i = end + 2
+
         argv = []
         for _ in range(argc):
+            if data[i:i+1] != b'$':
+                # Malformed / partial frame → abort this command
+                break
+
             i += 1
             end = data.index(b'\r\n', i)
-            ln = int(data[i:end])
+            length = int(data[i:end])
             i = end + 2
-            argv.append(data[i:i+ln])
-            i += ln + 2
-        yield argv
 
+            arg = data[i:i+length]
+            argv.append(arg)
+            i += length + 2  # data + CRLF
+
+        if argv:
+            yield argv
 def opcode(argv):
     return argv[0].lower()
 
