@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 import sys
-import re
 from pathlib import Path
 
-MAX_BLOCK = 25
-MIN_BLOCK = 5
-MAX_REPEAT_KEEP = 5   # keep first 5 fuzz iterations
-
-NUM_RE = re.compile(rb'^-?\d+(\.\d+)?$')
+# ---------------- CONFIG ----------------
+MIN_BLOCK = 6
+MAX_BLOCK = 20
+MAX_REPEAT_KEEP = 3     # keep first 3 identical blocks
+MAX_ARG_LEN = 64        # truncate long arguments
+# ---------------------------------------
 
 def parse_resp(data: bytes):
     i = 0
@@ -29,20 +29,20 @@ def parse_resp(data: bytes):
             i += ln + 2
         yield argv
 
-def normalize_arg(a: bytes) -> bytes:
-    if NUM_RE.match(a):
-        return b'#'
-    return a.lower()
+def shape(argv):
+    # opcode + argc only (THIS is the key insight)
+    return (argv[0].lower(), len(argv))
 
-def template(argv):
-    return tuple(normalize_arg(a) for a in argv)
+def truncate_arg(a: bytes) -> bytes:
+    if len(a) > MAX_ARG_LEN:
+        return a[:MAX_ARG_LEN] + b"..."
+    return a
 
 def collapse_blocks(cmds):
+    shapes = [shape(c) for c in cmds]
     out = []
     i = 0
     n = len(cmds)
-
-    templates = [template(c) for c in cmds]
 
     while i < n:
         collapsed = False
@@ -51,13 +51,13 @@ def collapse_blocks(cmds):
             if i + size * 2 > n:
                 continue
 
-            block = templates[i:i+size]
+            block = shapes[i:i+size]
             reps = 1
 
             while True:
                 s = i + reps * size
                 e = s + size
-                if e > n or templates[s:e] != block:
+                if e > n or shapes[s:e] != block:
                     break
                 reps += 1
 
@@ -74,16 +74,18 @@ def collapse_blocks(cmds):
 
     return out
 
-def convert(resp_path, out_path):
+def convert(resp_path: Path, out_path: Path):
     cmds = list(parse_resp(resp_path.read_bytes()))
     reduced = collapse_blocks(cmds)
 
     with out_path.open("wb") as f:
-        for c in reduced:
-            f.write(b" ".join(c) + b"\n")
+        for argv in reduced:
+            argv2 = [truncate_arg(a) for a in argv]
+            f.write(b" ".join(argv2) + b"\n")
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("usage: input.resp output.bin")
         sys.exit(1)
+
     convert(Path(sys.argv[1]), Path(sys.argv[2]))
