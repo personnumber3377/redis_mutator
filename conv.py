@@ -3,25 +3,27 @@ import sys
 from pathlib import Path
 
 # ---------------- CONFIG ----------------
-MIN_BLOCK = 6
-MAX_BLOCK = 20
-MAX_REPEAT_KEEP = 3     # keep first 3 identical blocks
-MAX_ARG_LEN = 64        # truncate long arguments
-# ---------------------------------------
+MAX_REPEAT_BLOCKS = 2
+MIN_BLOCK = 3
+MAX_BLOCK = 12
+
+MAX_ARGS_TOTAL = 64        # absolute cap per command
+MAX_GEOADD_TRIPLES = 5    # lon lat member × N
+MAX_ARG_LEN = 64
+# --------------------------------------
 
 def parse_resp(data: bytes):
     i = 0
     n = len(data)
     while i < n:
-        if data[i:i+1] != b'*':
-            raise ValueError("Bad RESP")
+        assert data[i:i+1] == b'*'
         i += 1
         end = data.index(b'\r\n', i)
         argc = int(data[i:end])
         i = end + 2
         argv = []
         for _ in range(argc):
-            i += 1  # $
+            i += 1
             end = data.index(b'\r\n', i)
             ln = int(data[i:end])
             i = end + 2
@@ -29,41 +31,48 @@ def parse_resp(data: bytes):
             i += ln + 2
         yield argv
 
-def shape(argv):
-    # opcode + argc only (THIS is the key insight)
-    return (argv[0].lower(), len(argv))
+def opcode(argv):
+    return argv[0].lower()
 
-def truncate_arg(a: bytes) -> bytes:
-    if len(a) > MAX_ARG_LEN:
-        return a[:MAX_ARG_LEN] + b"..."
-    return a
+def truncate_arg(a: bytes):
+    return a if len(a) <= MAX_ARG_LEN else a[:MAX_ARG_LEN] + b"..."
+
+def shrink_command(argv):
+    op = opcode(argv)
+
+    # GEOADD key lon lat member ...
+    if op == b"geoadd" and len(argv) > 5:
+        key = argv[1:2]
+        triples = argv[2:]
+        triples = triples[: MAX_GEOADD_TRIPLES * 3]
+        argv = [argv[0]] + key + triples
+
+    # Hard cap total args
+    argv = argv[:MAX_ARGS_TOTAL]
+
+    return [truncate_arg(a) for a in argv]
 
 def collapse_blocks(cmds):
-    shapes = [shape(c) for c in cmds]
+    ops = [opcode(c) for c in cmds]
     out = []
     i = 0
-    n = len(cmds)
 
-    while i < n:
+    while i < len(cmds):
         collapsed = False
 
         for size in range(MIN_BLOCK, MAX_BLOCK + 1):
-            if i + size * 2 > n:
+            block = ops[i:i+size]
+            if len(block) < size:
                 continue
 
-            block = shapes[i:i+size]
             reps = 1
-
-            while True:
-                s = i + reps * size
-                e = s + size
-                if e > n or shapes[s:e] != block:
-                    break
+            while ops[i + reps*size : i + (reps+1)*size] == block:
                 reps += 1
 
-            if reps > MAX_REPEAT_KEEP:
-                keep = MAX_REPEAT_KEEP * size
-                out.extend(cmds[i:i+keep])
+            if reps > MAX_REPEAT_BLOCKS:
+                for r in range(MAX_REPEAT_BLOCKS):
+                    for j in range(size):
+                        out.append(cmds[i + r*size + j])
                 i += reps * size
                 collapsed = True
                 break
@@ -74,18 +83,17 @@ def collapse_blocks(cmds):
 
     return out
 
-def convert(resp_path: Path, out_path: Path):
-    cmds = list(parse_resp(resp_path.read_bytes()))
-    reduced = collapse_blocks(cmds)
+def convert(inp: Path, outp: Path):
+    cmds = list(parse_resp(inp.read_bytes()))
+    cmds = collapse_blocks(cmds)
 
-    with out_path.open("wb") as f:
-        for argv in reduced:
-            argv2 = [truncate_arg(a) for a in argv]
-            f.write(b" ".join(argv2) + b"\n")
+    with outp.open("wb") as f:
+        for c in cmds:
+            c = shrink_command(c)
+            f.write(b" ".join(c) + b"\n")
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("usage: input.resp output.bin")
         sys.exit(1)
-
     convert(Path(sys.argv[1]), Path(sys.argv[2]))
