@@ -1,0 +1,93 @@
+diff --git a/src/networking.c b/src/networking.c
+index 09a9fac5c..d305b63f1 100644
+--- a/src/networking.c
++++ b/src/networking.c
+@@ -37,6 +37,50 @@ static inline int _writeToClientSlave(client *c, ssize_t *nwritten);
+ static pendingCommand *acquirePendingCommand(void);
+ static void reclaimPendingCommand(client *c, pendingCommand *pcmd);
+ 
++// For fuzzing purposes...
++static const char *command_trace_filename = NULL;
++static FILE *command_trace_fp = NULL;
++
++static const char *getCommandTraceFilename(void) {
++    if (command_trace_filename) return command_trace_filename;
++    command_trace_filename = getenv("REDIS_COMMAND_TRACE");
++    return command_trace_filename;
++}
++
++static void openCommandTraceIfNeeded(void) {
++    const char *fname = getCommandTraceFilename();
++    if (!fname) return;
++
++    if (command_trace_fp) return;
++
++    command_trace_fp = fopen(fname, "ab");
++    if (!command_trace_fp) {
++        serverLog(LL_WARNING,
++            "Failed to open command trace file '%s'", fname);
++        return;
++    }
++
++    /* Optional: unbuffered so crashes still flush */
++    setvbuf(command_trace_fp, NULL, _IONBF, 0);
++}
++
++static void traceCommandRESP(client *c) {
++    if (!command_trace_fp) return;
++
++    /* *<argc>\r\n */
++    fprintf(command_trace_fp, "*%d\r\n", c->argc);
++
++    for (int i = 0; i < c->argc; i++) {
++        sds arg = c->argv[i]->ptr;
++        size_t len = sdslen(arg);
++
++        /* $<len>\r\n<arg>\r\n */
++        fprintf(command_trace_fp, "$%zu\r\n", len);
++        fwrite(arg, 1, len, command_trace_fp);
++        fwrite("\r\n", 1, 2, command_trace_fp);
++    }
++}
++
+ int ProcessingEventsWhileBlocked = 0; /* See processEventsWhileBlocked(). */
+ __thread sds thread_reusable_qb = NULL;
+ __thread int thread_reusable_qb_used = 0; /* Avoid multiple clients using reusable query
+@@ -3130,6 +3174,13 @@ int processInputBuffer(client *c) {
+                 break;
+             }
+ 
++            // Save fuzzing input...
++
++            openCommandTraceIfNeeded();
++            if (command_trace_fp) {
++                traceCommandRESP(c);
++            }
++
+             /* We are finally ready to execute the command. */
+             if (processCommandAndResetClient(c) == C_ERR) {
+                 /* If the client is no longer valid, we avoid exiting this
+diff --git a/tests/test_helper.tcl b/tests/test_helper.tcl
+index 88cb6a76a..3a3720024 100644
+--- a/tests/test_helper.tcl
++++ b/tests/test_helper.tcl
+@@ -279,6 +279,10 @@ proc test_server_main {} {
+     set tclsh [info nameofexecutable]
+     # Open a listening socket, trying different ports in order to find a
+     # non busy one.
++    # set clientport [find_available_port [expr {$::baseport - 32}] 32]
++    # sleep 10
++    # vwait 1
++    # after 4000
+     set clientport [find_available_port [expr {$::baseport - 32}] 32]
+     if {!$::quiet} {
+         puts "Starting test server at port $clientport"
+@@ -302,6 +306,8 @@ proc test_server_main {} {
+         }
+     }
+ 
++    after 4000
++
+     # Setup global state for the test server
+     set ::idle_clients {}
+     set ::active_clients {}
